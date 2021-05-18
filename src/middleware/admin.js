@@ -1,9 +1,11 @@
-const firebase = require("firebase-admin");
+const admin = require("firebase-admin");
 const credentials = require("./credentials.json");
 
-firebase.initializeApp({
-  credential: firebase.credential.cert(credentials),
-  databaseURL: "https://<yourproject>.firebaseio.com",
+var serviceAccount = require("path/to/serviceAccountKey.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://chess-web-app-13362-default-rtdb.asia-southeast1.firebasedatabase.app"
 });
 
-module.exports = firebase;
+module.exports = admin;

@@ -15,8 +15,6 @@ const PORT = process.env.PORT || 5000;
 var routes = require('./api-routes/routes.js')
 
 require("./middleware/socket.js")(io);
-app.use('/', routes.onboarding)
-app.use('/', routes.learn)
 app.use('/', routes.play)
 
 app.use(
