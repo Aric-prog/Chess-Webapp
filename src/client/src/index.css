@@ -218,3 +218,8 @@ code {
   font-size: 80px;
   color: #fcd02f;
 }
+
+.board{
+  min-width: 400px;
+  min-height: 400px;
+}
