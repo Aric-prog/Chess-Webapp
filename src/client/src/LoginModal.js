@@ -1,8 +1,10 @@
+import '../node_modules/font-awesome/css/font-awesome.min.css';
+
 const LoginModal = () => {
 
-    const linkTemp = "#";
+    const linkTemp = "#"; 
 
-    return (
+    return(
         <div className="modal">
             <div className="modal-inner">
                 <i class="far fa-times-circle"></i>
@@ -10,10 +12,8 @@ const LoginModal = () => {
                     <h1>Login</h1>
                 </div>
                 <form action="" className="form-container">
-                    <input type="text" placeholder="Email address" required/>
-                    <i class="fas fa-user" aria-hidden="true"></i>
-                    <input type="password" placeholder="Password" required/>
-                    <i class="fas fa-lock"></i>
+                    <input type="text" placeholder="&#xF007;  Email address" required/>
+                    <input type="password" placeholder="&#xF023;  Password" required/>
                     <a href={linkTemp} className="forgot-password">Forgot Password?</a>
                     <button type="submit" value="Login">LOGIN</button>
                 </form>
