@@ -198,7 +198,7 @@ code {
 }
 
 .piece{
-  background-color: white;
+  background-color: #791a3d;
   margin: 20px 25px;
   max-width: 100%;
   width: 29.42%;
@@ -208,9 +208,13 @@ code {
 }
 
 .piece h1{
-  
+  font-weight: 500;
+  margin-top: 30px;
+  font-size: 36px;
+  color: #fcd02f
 }
 
 .piece i{
-  font-size: 50px;
+  font-size: 80px;
+  color: #fcd02f;
 }
