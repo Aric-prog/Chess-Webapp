@@ -223,3 +223,21 @@ code {
   min-width: 400px;
   min-height: 400px;
 }
+
+.game-container{
+  max-width: 1280px;
+  padding: 0px 15px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.history{
+  width: 400px;
+  height: 200px;
+  margin-left: 100px;
+  margin-top:auto;
+  margin-bottom:auto;
+  background-color: white;
+}
