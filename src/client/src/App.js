@@ -1,3 +1,5 @@
+import LoginModal from "./LoginModal";
+
 const { default: Header } = require("./Header");
 const { default: Home } = require("./Home");
 const { default: Learn } = require("./Learn");
@@ -8,7 +10,9 @@ function App() {
     <div className="App">
       <Header></Header>
       {/* <Home></Home> */}
-      <Play></Play>
+      <LoginModal></LoginModal>
+      <Learn></Learn>
+      {/* <Play></Play> */}
     </div>
   );
 }
