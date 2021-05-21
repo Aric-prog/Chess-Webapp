@@ -3,8 +3,8 @@ class Room{
         this.currentFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
         this.whitePlayerUID = whitePlayerUID;
         this.blackPlayerUID = blackPlayerUID;
-        this.whiteTimeInSeconds = "60" 
-        this.blackTimeInSeconds = "60" 
+        this.whiteTimeInSeconds = 60 
+        this.blackTimeInSeconds = 60 
     }
     createIntervals(){
         this.roomTimer = setInterval(this.decrementTime(), 1000)

@@ -2,6 +2,7 @@ const http = require('http');
 const express = require('express');
 const path = require('path');
 const session = require('express-session');
+const cors = require('cors')
 
 const app = express()
 const server = http.createServer(app)
@@ -16,7 +17,7 @@ var routes = require('./api-routes/routes.js')
 
 require("./middleware/socket.js")(io);
 app.use('/', routes.play)
-
+app.use(cors())
 app.use(
     session({
         secret : "super secret key",
