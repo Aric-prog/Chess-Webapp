@@ -10,7 +10,7 @@ const { default: LoginModal } = require("./LoginModal");
 
 function App() {
   return (
-    <AuthProvider>
+
       <Router>
         <div className="App">
           <Header></Header>
@@ -30,14 +30,15 @@ function App() {
               </Route> */}
             </Switch>
 
-            {/* <LoginModal></LoginModal> */}
+            <AuthProvider>
+            <LoginModal></LoginModal>
+            </AuthProvider>
             {/* <Learn></Learn> */}
             {/* <Play></Play> */}
             {/* <test></test> */}
           </div>
         </div>
       </Router>
-    </AuthProvider>
   );
 }
 
