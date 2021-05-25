@@ -13,7 +13,6 @@ const LoginModal = () => {
 
     async function handleSubmit(e) {
         e.preventDefault()
-        console.log("dofunny")
         try {
             setError('')
             setLoading(true)
