@@ -37,11 +37,23 @@ class Play extends React.Component{
         this.socket = socketIOClient(ENDPOINT);
         this.board = React.createRef();
         this.socket.on("move", this.onReceiveMove)
+        // firebase.initializeApp(firebaseConfig)
     }
 
     handleSubmit(event) {
         this.joinRoom(event.target.value)
     }
+
+    // loginAnon(){
+    //     firebase.auth().signInAnonymously()
+    //         .then(() => {
+
+    //         })
+    //         .catch((error) => {
+
+    //         })
+    // }   
+
     render(){
         return (
             <div className="home-wrapper" onClick={this.getFen}>
@@ -51,7 +63,8 @@ class Play extends React.Component{
                     <form onSubmit={this.handleSubmit}>
                         <input type="text" value={this.state.roomCode}></input>
                         <input type="submit" value="Submit"></input>
-                    </form >
+                    </form>
+                    <button type="button"> Login Anonymously </button>
                 </div>
             </div>
         );
