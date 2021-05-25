@@ -6,7 +6,7 @@ const LoginModal = () => {
 
     const emailRef = useRef()
     const passwordRef = useRef()
-    const { signup } = useAuth()
+    const { signin } = useAuth()
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
     const linkTemp = "#"; 
@@ -16,7 +16,7 @@ const LoginModal = () => {
         try {
             setError('')
             setLoading(true)
-            await signup(emailRef.current.value, passwordRef.current.value)
+            await signin(emailRef.current.value, passwordRef.current.value)
         } catch {
             return setError('Failed to create an acount')
         }
