@@ -9,37 +9,38 @@ const { default: About } = require("./About");
 const { default: LoginModal } = require("./LoginModal");
 
 function App() {
-  return (
+	return (
 
-      <Router>
-        <div className="App">
-          <Header></Header>
-          <div className="main-content">
-            <Switch>
-              <Route exact path="/home">
-                <Home></Home>
-              </Route>
-              <Route exact path="/learn">
-                <Learn></Learn>
-              </Route>
-              <Route exact path="/play"> 
-                <Play></Play>
-              </Route>
-              {/* <Route exact path="/about">
-                <About></About>
-              </Route> */}
-            </Switch>
+	<Router>
+		<AuthProvider>
+		<div className="App">
+			<Header></Header>
+			<div className="main-content">
+				<Switch>
+				<Route exact path="/home">
+				<Home></Home>
+				</Route>
+				<Route exact path="/learn">
+				<Learn></Learn>
+				</Route>
+				<Route exact path="/play"> 
+				<Play></Play>
+				</Route>
+				{/* <Route exact path="/about">
+				<About></About>
+				</Route> */}
+				</Switch>
 
-            <AuthProvider>
-            <LoginModal></LoginModal>
-            </AuthProvider>
-            {/* <Learn></Learn> */}
-            {/* <Play></Play> */}
-            {/* <test></test> */}
-          </div>
-        </div>
-      </Router>
-  );
+
+				{/* <LoginModal></LoginModal> */}
+				{/* <Learn></Learn> */}
+				<Play></Play>
+				{/* <test></test> */}
+			</div>
+		</div>
+		</AuthProvider>
+	</Router>
+	);
 }
 
 export default App;

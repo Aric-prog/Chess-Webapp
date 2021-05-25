@@ -1,74 +1,73 @@
-import React from "react";
+import React, {useState, useEffect, useRef} from "react";
 import Board from "./Board"
 import MatchHistory from "./MatchHistory"
 import * as Chess from "chess.js";
+import { auth } from "./firebase/firebase-config"
 
 import socketIOClient from "socket.io-client";
 const ENDPOINT = "http://127.0.0.1:5000";
 
-class Play extends React.Component{
-    state = {}
-    getChessObject = () => {
-        this.game = new Chess();
-        return this.game;
-    }
+const Play = () => {
+    const [uid, setUid] = useState("");
+    const [roomCode, setRoomCode] = useState("");
+    const game = useRef(new Chess())
+    const socket = useRef(null)
+    const board = useRef()
     
-    getFen = () => {
-        return this.game.fen();
+    const getFen = () => {
+        return game.current.fen();
     }
 
-    onMove = (move, fen) => {
+    const onMove = (move, fen) => {
         // Function will be called when user drops their chesspiece
-        this.socket.emit("move", move, fen, (response) => {
+        socket.current.emit("move", move, fen, (response) => {
             console.log(response.status)
         })        
     }
     
-    onReceiveMove = (move) => {
-        this.game.move(move);
-        this.child.current.movePiece()
+    const onReceiveMove = (move) => {
+        game.current.move(move);
+        board.current.movePiece()
     }
 
-    joinRoom = (roomCode) => {
-        this.socket.emit('join room', roomCode, this.socket)
+    const joinRoom = (roomCode) => {
+        socket.current.emit('join room', roomCode, socket.current)
     };
 
-    componentDidMount() {
-        this.socket = socketIOClient(ENDPOINT);
-        this.board = React.createRef();
-        this.socket.on("move", this.onReceiveMove)
-        // firebase.initializeApp(firebaseConfig)
+    useEffect(() => {
+        socket.current = socketIOClient(ENDPOINT);
+        
+        socket.current.on("move", onReceiveMove);
+    }, [])
+
+    const handleSubmit = (event) => {
+        joinRoom(event.target.value)
     }
 
-    handleSubmit(event) {
-        this.joinRoom(event.target.value)
-    }
+    const loginAnon= () => {
+        auth().signInAnonymously()
+            .then((userCred) => {
+                setUid(userCred.user.uid)
+                console.log("success")
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }   
 
-    // loginAnon(){
-    //     firebase.auth().signInAnonymously()
-    //         .then(() => {
-
-    //         })
-    //         .catch((error) => {
-
-    //         })
-    // }   
-
-    render(){
-        return (
-            <div className="home-wrapper" onClick={this.getFen}>
-                <div className="game-container">
-                    <Board ref={this.child} getChessObject = {this.getChessObject} width = {600}/>
-                    <MatchHistory></MatchHistory>
-                    <form onSubmit={this.handleSubmit}>
-                        <input type="text" value={this.state.roomCode}></input>
-                        <input type="submit" value="Submit"></input>
-                    </form>
-                    <button type="button"> Login Anonymously </button>
-                </div>
+    return (
+        <div className="home-wrapper" onClick={getFen}>
+            <div className="game-container">
+                <Board ref={board} game = {game.current} width = {600}/>
+                <MatchHistory></MatchHistory>
+                <form onSubmit={handleSubmit}>
+                    <input type="text" value={roomCode}></input>
+                    <input type="submit" value="Submit"></input>
+                </form>
+                <button type="button"> Login Anonymously </button>
             </div>
-        );
-    }
+        </div>
+    );
 }
 
 
