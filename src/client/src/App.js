@@ -6,10 +6,9 @@ const { default: Home } = require("./Home");
 const { default: Learn } = require("./Learn");
 const { default: Play } = require("./Play")
 const { default: About } = require("./About");
-const { default: LoginModal } = require("./LoginModal");
-const { default: SignUpModal } = require("./SignUpModal");
 
 function App() {
+
   return (
 
     <Router>
@@ -17,7 +16,7 @@ function App() {
         <Header></Header>
         <div className="main-content">
           <Switch>
-            <Route path="/">
+            <Route exact path="/">
               <Home></Home>
             </Route>
             <Route exact path="/learn">
@@ -30,9 +29,6 @@ function App() {
                 <About></About>
               </Route> */}
           </Switch>
-          <Route path="/login">
-            <LoginModal></LoginModal>
-          </Route>
           {/* <SignUpModal></SignUpModal> */}
           {/* <AuthProvider>
             <LoginModal></LoginModal>

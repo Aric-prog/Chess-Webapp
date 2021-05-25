@@ -1,13 +1,14 @@
 import { Link } from 'react-router-dom';
+import ReactDom from 'react-dom'
 
-const SignUpModal = () => {
+const SignUpModal = (props) => {
 
     const linkTemp = "#"; 
 
-    return ( 
+    return ReactDom.createPortal( 
         <div className="modal">
             <div className="modal-inner">
-                <i class="far fa-times-circle"></i>
+                <i class="far fa-times-circle" onClick={props.onClose}></i>
 
                 <div className="modal-header">
                     <h1>Sign Up</h1>
@@ -22,7 +23,8 @@ const SignUpModal = () => {
                 <p>Already have an account? <Link to="/login" className="modal-signup"> Sign in now!</Link></p>
                 
             </div>
-        </div>
+        </div>,
+        document.getElementById('portal')
     );
 }
  

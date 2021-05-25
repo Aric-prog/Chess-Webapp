@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import LoginModal from './LoginModal';
 import { Link } from 'react-router-dom';
+import SignUpModal from './SignUpModal';
 
 const Header = () => {
 
-    const linkTemp = "#";
+    const [showLogin, setShowLogin] = useState(false);
+    const [showSignUp, setShowSignUp] = useState(false);
 
     return (
         <nav className="navbar">
@@ -19,11 +21,17 @@ const Header = () => {
                 </div>
                 <div className="header-right">
                     <div className="sign-container">
-                        <Link to="/login" className="signin"> Sign in</Link>
-                        <Link to="/signup" className="signup"> Sign up</Link>
+                        <Link className="signin" onClick={() => {
+                            setShowLogin(true);
+                        }}> Sign in</Link>
+                        <Link className="signup" onClick={() =>{
+                            setShowSignUp(true);
+                        }}> Sign up</Link>
                     </div>
                 </div>
             </div>
+            {showLogin && <LoginModal open={showLogin} onClose={() => setShowLogin(false)}></LoginModal>}
+            {showSignUp && <SignUpModal open={showSignUp} onClose={() => setShowSignUp(false)}></SignUpModal>}
 
 
         </nav>

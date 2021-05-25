@@ -253,7 +253,7 @@ code {
 
 .modal-inner{
   position: absolute;
-  top: 25%;
+  top: 17%;
   right: 0;
   left: 0;
   width: 25%;
@@ -373,5 +373,9 @@ code {
 
 .form-container button:hover {
   color: #fff;
+  cursor: pointer;
+}
+
+.fa-times-circle:hover{
   cursor: pointer;
 }
