@@ -11,11 +11,7 @@ const Header = () => {
             <div className="container">
                 <div className="header-left">
                     <ul className="header-left-list">
-                        {/* <li ><a href={linkTemp} className="logo" ><i class="fas fa-chess-board"></i> Chess</a></li>
-                        <li ><a href={linkTemp} className="learn" >Learn</a></li>
-                        <li ><a href={linkTemp} className="play" >Play</a></li>
-                        <li ><a href={linkTemp} className="about-us" >About Us</a></li> */}
-                        <li><Link to="/home" className="logo"> <i class="fas fa-chess-board"></i> Chess</Link></li>
+                        <li><Link to="/" className="logo"> <i class="fas fa-chess-board"></i> Chess</Link></li>
                         <li><Link to="/learn" className="learn"> Learn</Link></li>
                         <li><Link to="/play" className="play"> Play</Link></li>
                         <li><Link to="/about-us" className="about-us"> About Us</Link></li>
@@ -23,10 +19,8 @@ const Header = () => {
                 </div>
                 <div className="header-right">
                     <div className="sign-container">
-                        <a href={linkTemp} className="signin" onClick={() => {return(
-                            <LoginModal></LoginModal>
-                        )}}>Sign in</a>
-                        <a href={linkTemp} className="signup">Sign up</a>    
+                        <Link to="/login" className="signin"> Sign in</Link>
+                        <Link to="/signup" className="signup"> Sign up</Link>
                     </div>
                 </div>
             </div>
