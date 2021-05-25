@@ -1,7 +1,7 @@
 import chessintro from './images/chessintro.png';
+import { Link } from 'react-router-dom';
 const Home = () => {
 
-    const linkTemp = '#';
     return (
         <div className="home-wrapper">
             <div className="container">
@@ -12,8 +12,8 @@ const Home = () => {
                             <h3>Don't have a board? Play chess online here for free! Compete with strangers or friends alike to test your skills!</h3>
                         </div>
                         <div className="btn-wrapper">
-                            <a href={linkTemp} className="home-btn-play">Play now</a>
-                            <a href={linkTemp} className="home-btn-learn">Learn about chess</a>
+                            <Link to="/play" className="home-btn-play"> Play now</Link>
+                            <Link to="/learn" className="home-btn-learn"> Learn about chess</Link>
                         </div>
 
                     </div>

@@ -1,5 +1,4 @@
 import { AuthProvider } from "./firebase/AuthContext";
-import LoginModal from "./LoginModal";
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 const { default: Header } = require("./Header");
