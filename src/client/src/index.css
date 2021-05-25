@@ -98,7 +98,7 @@ code {
   border-color: #fcf961;
 }
 
-.home-wrapper{
+.big-wrapper{
   width: 100%;
   height: 100%;
   background-color: #ffe2d6;
@@ -121,19 +121,7 @@ code {
   flex: 1;
   /* background-size: cover; */
 }
-.home-wrapper h1{
-  font-size: 52px;
-  line-height: 62px;
-  font-weight: 500;
-  font-family: sans-serif;
-}
 
-.home-wrapper h3{
-  font-size: 24px;
-  line-height: 30px;
-  font-weight: 400;
-  font-family: sans-serif;
-}
 .chess-intro{
   max-width: 100%;
   height: auto;
@@ -141,6 +129,20 @@ code {
 
 .text-wrapper{
   padding-bottom: 25px;
+}
+
+.text-wrapper h1{
+  font-size: 52px;
+  line-height: 62px;
+  font-weight: 500;
+  font-family: sans-serif;
+}
+
+.text-wrapper h3{
+  font-size: 24px;
+  line-height: 30px;
+  font-weight: 400;
+  font-family: sans-serif;
 }
 
 .btn-wrapper{
@@ -176,17 +178,9 @@ code {
   padding: 20px 0px;
 }
 
-.rules-wrapper h1{
+.rules-title{
   padding-bottom: 60px;
-}
-
-.rules-wrapper{
-  width: 100%;
-  height: 100%;
-  background-color: #ffe2d6;
-  text-align: center;
-  padding-top: 180px;
-  padding-bottom: 100px;
+  font-size: 48px;
 }
 
 .piece-container{
@@ -212,12 +206,17 @@ code {
   font-weight: 500;
   margin-top: 30px;
   font-size: 36px;
-  color: #fcd02f
+  color: #fcd02f;
 }
 
 .piece i{
   font-size: 80px;
   color: #fcd02f;
+}
+
+.piece p{
+  font-size: 16px;
+  color: #ffe2d6;
 }
 
 .board{
@@ -378,4 +377,62 @@ code {
 
 .fa-times-circle:hover{
   cursor: pointer;
+}
+
+.thanks-wrapper{
+  color: #791a3d;
+}
+
+.thanks-wrapper h1{
+  font-size: 48px;
+}
+
+.thanks-wrapper p{
+  color: #474747;
+  font-size: 20px;
+}
+
+.member-wrapper{
+  color: #474747;
+  /* font-family: sans-serif; */
+}
+
+.member-outer{
+  margin-top: 100px;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.member{
+  text-align: center;
+  width: 33.333%;
+}
+
+.image-cropper{
+  width: 180px;
+  height: 180px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+  display: block;
+  margin: auto;
+  /* border: #791a3d solid 6px; */
+  box-shadow: 0px 8px 10px #333333;
+}
+
+.member-img{
+  display: inline;
+  margin: 0 auto;
+  height: auto;
+  width: 100%;
+}
+
+.member h2{
+  color: #791a3d;
+  font-weight: 700;
+}
+.member p{
+  width: 80%;
+  margin: auto;
 }

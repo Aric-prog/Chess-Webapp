@@ -16,7 +16,7 @@ const Header = () => {
                         <li><Link to="/" className="logo"> <i class="fas fa-chess-board"></i> Chess</Link></li>
                         <li><Link to="/learn" className="learn"> Learn</Link></li>
                         <li><Link to="/play" className="play"> Play</Link></li>
-                        <li><Link to="/about-us" className="about-us"> About Us</Link></li>
+                        <li><Link to="/about" className="about-us"> About Us</Link></li>
                     </ul>
                 </div>
                 <div className="header-right">

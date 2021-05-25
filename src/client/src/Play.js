@@ -56,7 +56,7 @@ class Play extends React.Component{
 
     render(){
         return (
-            <div className="home-wrapper" onClick={this.getFen}>
+            <div className="big-wrapper" onClick={this.getFen}>
                 <div className="game-container">
                     <Board ref={this.child} getChessObject = {this.getChessObject} width = {600}/>
                     <MatchHistory></MatchHistory>

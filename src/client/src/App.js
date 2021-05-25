@@ -25,9 +25,9 @@ function App() {
             <Route exact path="/play">
               <Play></Play>
             </Route>
-            {/* <Route exact path="/about">
-                <About></About>
-              </Route> */}
+            <Route exact path="/about">
+              <About></About>
+            </Route>
           </Switch>
           {/* <SignUpModal></SignUpModal> */}
           {/* <AuthProvider>
