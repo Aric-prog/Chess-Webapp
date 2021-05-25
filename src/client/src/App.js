@@ -1,3 +1,4 @@
+import { AuthProvider } from "./firebase/AuthContext";
 import LoginModal from "./LoginModal";
 
 const { default: Header } = require("./Header");
@@ -7,14 +8,16 @@ const { default: Play} = require("./Play")
 
 function App() {
   return (
-    <div className="App">
-      <Header></Header>
-      {/* <Home></Home> */}
-      {/* <LoginModal></LoginModal> */}
-      {/* <Learn></Learn> */}
-      <Play></Play>
-      {/* <test></test> */}
-    </div>
+    <AuthProvider>
+      <div className="App">
+        <Header></Header>
+        {/* <Home></Home> */}
+        <LoginModal></LoginModal>
+        {/* <Learn></Learn> */}
+        {/* <Play></Play> */}
+        {/* <test></test> */}
+      </div>
+    </AuthProvider>
   );
 }
 
