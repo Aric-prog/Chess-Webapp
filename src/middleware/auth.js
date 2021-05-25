@@ -15,9 +15,7 @@ function authenticated(req, res, next){
         .auth()
         .verifyIdToken(token)
         .then(() => next())
-        .catch(() => res.send({message : "could not authorize"}).status(403))
+        .catch(() => res.send({message : "Could not authorize"}).status(403))
 }
-
-
 
 module.exports = authenticated;

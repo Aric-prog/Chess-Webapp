@@ -31,13 +31,20 @@ class Board extends Component{
     
         // illegal move
         if (move === null) return;
-        console.log(this.game.pgn())
         this.setState(({ history, pieceSquare }) => ({
           fen: this.game.fen(),
           history: this.game.history({ verbose: true }),
           squareStyles: squareStyling({ pieceSquare, history })
         }));
     };
+
+    movePiece = () => {
+		this.setState(({ history, pieceSquare }) => ({
+			fen: this.game.fen(),
+			history: this.game.history({ verbose: true }),
+			squareStyles: squareStyling({ pieceSquare, history })
+		}));
+    }
 
     render() {
         const {fen, width} = this.state
