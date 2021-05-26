@@ -60,7 +60,7 @@ const Play = () => {
     }   
 
     return (
-        <div className="home-wrapper">
+        <div className="big-wrapper">
             <div className="game-container">
                 <Board ref={board} game = {game} width = {600} fen = {fen} setFen={setFen} onMove = {onMove}/>
                 <MatchHistory></MatchHistory>

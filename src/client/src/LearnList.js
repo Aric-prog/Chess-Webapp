@@ -5,9 +5,9 @@ const LearnList = (props) => {
     const pieces = props.pieces;
     
     return (
-        <div className="rules-wrapper">
+        <div className="big-wrapper">
             <div className="container">
-                <h1>The Rules Of Chess</h1>
+                <h1 class="rules-title">The Rules Of Chess</h1>
                 <div className="piece-container">
                     {pieces.map((piece) => (
                         <div className="piece">
