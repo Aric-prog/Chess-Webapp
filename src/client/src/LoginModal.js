@@ -1,7 +1,10 @@
 import '../node_modules/font-awesome/css/font-awesome.min.css';
-import React, { useRef, useState } from 'react'
-import { useAuth } from './firebase/AuthContext'
+import React, { useRef, useState } from 'react';
+import { useAuth } from './firebase/AuthContext';
+import { Link } from 'react-router-dom';
 import ReactDom from 'react-dom'
+import SignUpModal from './SignUpModal';
+
 
 const LoginModal = (props) => {
 
@@ -10,7 +13,7 @@ const LoginModal = (props) => {
     // const { signin } = useAuth()
     // const [error, setError] = useState('')
     // const [loading, setLoading] = useState(false)
-    const linkTemp = "#"; 
+    // const linkTemp = "#"; 
 
 
     // async function handleSubmit(e) {
@@ -25,7 +28,10 @@ const LoginModal = (props) => {
     //     setLoading(false)
 
     // }
-    return ReactDom.createPortal(
+
+    // const [showSignUp, setShowSignUp] = useState(false);
+
+    return(
 
         <div className="modal">
             <div className="modal-inner">
@@ -39,10 +45,14 @@ const LoginModal = (props) => {
                     <a href={linkTemp} className="forgot-password">Forgot Password?</a>
                     <button disabled={loading} type="submit" value="Login">LOGIN</button>
                 </form> */}
-                <p>Don't have an account? <a href={linkTemp} className="modal-signup">Sign up now!</a></p>
+                <p>Don't have an account? <Link className="modal-signup" onClick={props.onClose, () => {
+                    setShowSignUp(true);
+                }} >Sign up now!</Link></p>
             </div>
-        </div>,
-        document.getElementById('portal')
+            {/* {showSignUp && <SignUpModal open={showSignUp} onClose={() => setShowSignUp(false)}></SignUpModal>} */}
+        </div>
+        
+        // document.getElementById('portal')
     );
 }
 

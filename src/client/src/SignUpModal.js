@@ -5,7 +5,7 @@ const SignUpModal = (props) => {
 
     const linkTemp = "#"; 
 
-    return ReactDom.createPortal( 
+    return( 
         <div className="modal">
             <div className="modal-inner">
                 <i class="far fa-times-circle" onClick={props.onClose}></i>
@@ -20,11 +20,11 @@ const SignUpModal = (props) => {
                     <input type="password" placeholder="&#xf01e;  Confirm Password" required/>
                     <button type="submit" value="Login">SIGN UP</button>
                 </form>
-                <p>Already have an account? <Link to="/login" className="modal-signup"> Sign in now!</Link></p>
+                <p>Already have an account? <Link className="modal-signup"> Sign in now!</Link></p>
                 
             </div>
-        </div>,
-        document.getElementById('portal')
+        </div>
+        // document.getElementById('portal')
     );
 }
  
