@@ -45,9 +45,7 @@ const LoginModal = (props) => {
                     <a href={linkTemp} className="forgot-password">Forgot Password?</a>
                     <button disabled={loading} type="submit" value="Login">LOGIN</button>
                 </form> */}
-                <p>Don't have an account? <Link className="modal-signup" onClick={props.onClose, () => {
-                    setShowSignUp(true);
-                }} >Sign up now!</Link></p>
+                <p>Don't have an account? <Link className="modal-signup" onClick={props.onClose}>Sign up now!</Link></p>
             </div>
             {/* {showSignUp && <SignUpModal open={showSignUp} onClose={() => setShowSignUp(false)}></SignUpModal>} */}
         </div>
