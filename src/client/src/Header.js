@@ -7,6 +7,8 @@ const Header = () => {
 
     const [showLogin, setShowLogin] = useState(false);
     const [showSignUp, setShowSignUp] = useState(false);
+    const [loggedIn, setLoggedIn] = useState(false);
+    const username = 'Bryan';
 
     return (
         <nav className="navbar">
@@ -20,13 +22,19 @@ const Header = () => {
                     </ul>
                 </div>
                 <div className="header-right">
-                    <div className="sign-container">
-                        <Link className="signin" onClick={() => {
+                    <div className="sign-container">        
+                        {!loggedIn && <Link className="signin" onClick={() => {
                             setShowLogin(true);
-                        }}> Sign in</Link>
-                        <Link className="signup" onClick={() =>{
+                        }}> Login</Link>}
+                        {!loggedIn && <Link className="signup" onClick={() =>{
                             setShowSignUp(true);
-                        }}> Sign up</Link>
+                        }}> Sign up</Link>}
+                        {loggedIn && <Link className="signin" onClick={() =>{
+                            setShowSignUp(true);
+                        }}> {username}</Link>}
+                        {loggedIn && <Link className="signup" onClick={() =>{
+                            loggedIn(false);
+                        }}> Logout</Link>}
                     </div>
                 </div>
             </div>

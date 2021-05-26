@@ -9,7 +9,6 @@ const SignUpModal = (props) => {
         <div className="modal">
             <div className="modal-inner">
                 <i class="far fa-times-circle" onClick={props.onClose}></i>
-
                 <div className="modal-header">
                     <h1>Sign Up</h1>
                 </div>
@@ -21,7 +20,6 @@ const SignUpModal = (props) => {
                     <button type="submit" value="Login">SIGN UP</button>
                 </form>
                 <p>Already have an account? <Link className="modal-signup"> Sign in now!</Link></p>
-                
             </div>
         </div>
         // document.getElementById('portal')

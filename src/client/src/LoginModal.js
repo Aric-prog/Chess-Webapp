@@ -30,7 +30,7 @@ const LoginModal = (props) => {
     }
 
     const [showSignUp, setShowSignUp] = useState(false);
-
+    
     return(
 
         <div className="modal">
