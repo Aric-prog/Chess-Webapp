@@ -1,4 +1,4 @@
-const admin = require("./admin")
+const admin = require("./admin");
 
 function authenticated(req, res, next){
     const headerToken = req.headers.authorization;
@@ -15,7 +15,7 @@ function authenticated(req, res, next){
         .auth()
         .verifyIdToken(token)
         .then(() => next())
-        .catch(() => res.send({message : "Could not authorize"}).status(403))
+        .catch(() => res.send({message : "Could not authorize"}).status(403));
 }
 
 module.exports = authenticated;

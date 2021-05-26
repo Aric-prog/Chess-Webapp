@@ -1,19 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Chessboard from "chessboardjsx";
 
 const Board = (props) => {
-	const [fen, setFen] = useState("start");
 	const [dropSquareStyle, setDropSquareStyle] = useState({});
 	const [squareStyles, setSquareStyles] = useState({});
 	const [square, setSquare] = useState("");
-	const [history, setHistory] = useState([]);
 	const [width, setWidth] = useState(props.width);
 
-	let game = props.game
+	let game = props.game;
+
+	useEffect(() => {
+		console.log("this is called right?")
+		updatePiece()
+	}, [props.fen])
+
     const onDrop = ({ sourceSquare, targetSquare }) => {
         // see if the move is legal
-        let move = game.move({
+        let move = game.current.move({
         	from: sourceSquare,
         	to: targetSquare,
         	promotion: "q" // always promote to a queen for example simplicity
@@ -21,25 +25,18 @@ const Board = (props) => {
     
         // illegal move
         if (move === null) return;
-		
-		setFen(game.fen());
-		setHistory(game.history({verbose : true}));
-		setSquareStyles(squareStyling(history))
-        // setState(({ history, pieceSquare }) => ({
-        //   	fen: game.fen(),
-        //   	history: game.history({ verbose: true }),
-        //   	squareStyles: squareStyling({ pieceSquare, history })
-        // }));
+		props.onMove(move, props.fen)
+		props.setFen(game.current.fen());
+		setSquareStyles(squareStyling());
     };
 
     const updatePiece = () => {
-		setFen(game.fen());
-		setSquareStyles(squareStyling(history))
+		props.setFen(props.fen);
+		// setSquareStyles(squareStyling())
     }
 
 	const squareStyling = () => {
-		const history = game.history({verbose : true})
-		console.log(history)
+		const history = game.current.history({verbose : true})
 		const sourceSquare = history[history.length - 1].from;
 		const targetSquare = history[history.length - 1].to;
 		const bgColor = "rgba(255, 255, 0, 0.4)";
@@ -51,7 +48,7 @@ const Board = (props) => {
 	};
 	
     return(
-		<Chessboard width={width} position={fen} onDrop={onDrop} squareStyles={squareStyles} boardStyle={{
+		<Chessboard width={width} position={props.fen} onDrop={onDrop} squareStyles={squareStyles} boardStyle={{
 			borderRadius: "5px",
 			boxShadow : "0 5px 15px rgba(0, 0, 0, 0.5)"}} />
 	)

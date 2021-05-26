@@ -1,5 +1,7 @@
 const { Chess } = require('chess.js')
-const admin = require("./admin")
+const admin = require("./admin");
+const auth = require("./socket-auth")
+const room = require("../room")
 const chess = new Chess()
 
 // Room Info, with key being id and room being the infos
@@ -7,44 +9,28 @@ var roomInfo = {}
 
 // Contains someone's uid and their room
 var playerRoom = {}
-module.exports = function(io) {
-    
+
+function init_io(io) {
     // Checks if user is authenticated here
-    io.use((socket, next) => {
-        headerToken = socket.handshake.authorization
-        if(!headerToken){
-            err = new Error("No Token provided")
-            next(err)
-        }
     
-        if(headerToken && headerToken.split(" ")[0] !== "Bearer"){
-            err = new Error("Invalid token")
-            next(err)
-        }
-    
-        const token = token.split(" ")[1];
-        admin
-            .auth()
-            .verifyIdToken(token)
-            .then(() => next())
-            .catch(() => next(new Error("Could not authenticate")))
-    })
     io.on('connect', socket => {
-        socket.on('message', msg => {
-            console.log('message' + msg)
-        })
-        socket.on('join room', roomCode, socket => {
+        console.log("well that's funny");
+        socket.on('join room', (roomCode) => {
+            console.log(roomCode)
             if(!roomCode in roomInfo){
-                socket.join(roomCode)
-            } else{
-                console.log("no room found")
+                // Room not in room list, creating room
+                roomInfo[roomCode] = new Room();
             }
+            playerRoom[socket.id] = roomCode;
+            roomInfo[roomCode].assignPlayer(socket.id);
+            socket.join(roomCode);
+            console.log("player : " + socket.id + " has joined room : " + roomCode);
             // Put user socket in a list somewhere, with key being socket and value being the roomCode
         })
         socket.on('move', (move, fen, callback) => {
             // If move is valid to current roomCode
             // Get uid and the room
-            var uidFromMiddleware = ""
+            var uidFromMiddleware = socket.id
             if(roomInfo[playerRoom[uidFromMiddleware]].currentFen === fen){
                 if(validateMove(move, fen)){
                     io.to(playerRoom[uidFromMiddleware]).emit('move', move)
@@ -55,7 +41,11 @@ module.exports = function(io) {
             callback({status:"not ok"})
         })
     });
+
+    // io.use(auth)
 };
+
+module.exports = init_io
 
 const validateMove = function(move, fen){
     if(chess.load(fen)){
