@@ -8,7 +8,7 @@ import socketIOClient from "socket.io-client";
 const ENDPOINT = "http://127.0.0.1:5000";
 
 const Play = () => {
-    const [fen, setFen] = useState("start")
+    const [fen, setFen] = useState("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
     const [uid, setUid] = useState("");
     const [roomCode, setRoomCode] = useState("");
     const game = useRef(new Chess())
@@ -28,9 +28,11 @@ const Play = () => {
     
     const onReceiveMove = (move) => {
         game.current.move(move);
+        setFen(getFen())
     }
 
     const joinRoom = (roomCode) => {
+        console.log("fire")
         socket.current.emit('join room', roomCode)
     };
 

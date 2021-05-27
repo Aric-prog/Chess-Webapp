@@ -1,6 +1,6 @@
 class Room{
     constructor(){
-        this.currentFen = "start"
+        this.currentFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
         this.whitePlayerUID = "";
         this.blackPlayerUID = "";
         this.whiteTimeInSeconds = 60 
@@ -25,17 +25,21 @@ class Room{
 
     assignPlayer(uid){
         // Assign players random sides
-        if(!(this.whitePlayerUID && this.blackPlayerUID)){
-            switch(Math.floor(Math.random() * 2)){
-                case 0:
-                    this.whitePlayerUID = uid
-                case 1:
-                    this.blackPlayerUID = uid
+        if(this.whitePlayerUID !== uid && this.blackPlayerUID !== uid){
+            if(this.whitePlayerUID === "" && this.blackPlayerUID === ""){
+                switch(Math.floor(Math.random() * 2)){
+                    case 0:
+                        this.setWhiteUID(uid)
+                        break;
+                    case 1:
+                        this.setBlackUID(uid)
+                        break;
+                }
+            } else if(this.whitePlayerUID === ""){
+                this.whitePlayerUID = uid
+            } else if(this.blackPlayerUID === ""){
+                this.blackPlayerUID = uid
             }
-        } else if(this.whitePlayerUID === ""){
-            this.whitePlayerUID = uid
-        } else if(this.blackPlayerUID === ""){
-            this.blackPlayerUID = uid
         }
     }
 
@@ -47,3 +51,5 @@ class Room{
         }
     }
 }
+
+module.exports = {Room}
