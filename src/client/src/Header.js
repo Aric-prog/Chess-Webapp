@@ -1,14 +1,28 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import LoginModal from './LoginModal';
 import { Link } from 'react-router-dom';
 import SignUpModal from './SignUpModal';
+import { useAuth } from './firebase/AuthContext';
 
 const Header = () => {
 
     const [showLogin, setShowLogin] = useState(false);
     const [showSignUp, setShowSignUp] = useState(false);
-    const [loggedIn, setLoggedIn] = useState(false);
-    const username = 'Bryan';
+    const { signout, currentUser } = useAuth()
+    const [error, setError] = useState('')
+    const [loading, setLoading] = useState(false)
+
+    async function handleSubmit(e) {
+        e.preventDefault()
+        try {
+            setError('')
+            setLoading(true)
+            await signout()
+        } catch {
+            return setError('Failed to signout')
+        }
+        setLoading(false)
+    }
 
     return (
         <nav className="navbar">
@@ -23,18 +37,17 @@ const Header = () => {
                 </div>
                 <div className="header-right">
                     <div className="sign-container">        
-                        {!loggedIn && <Link className="signin" onClick={() => {
+                        {(currentUser==null) && <Link className="signin" onClick={() => {
                             setShowLogin(true);
                         }}> Login</Link>}
-                        {!loggedIn && <Link className="signup" onClick={() =>{
+                        {(currentUser==null) && <Link className="signup" onClick={() =>{
                             setShowSignUp(true);
                         }}> Sign up</Link>}
-                        {loggedIn && <Link className="signin" onClick={() =>{
+                        {(currentUser!=null) && <Link className="signin" onClick={() =>{
                             setShowSignUp(true);
-                        }}> {username}</Link>}
-                        {loggedIn && <Link className="signup" onClick={() =>{
-                            loggedIn(false);
-                        }}> Logout</Link>}
+                        }}> {currentUser.email} </Link>}
+                        {(currentUser!=null) && <Link className="signup" onClick={handleSubmit}> 
+                            Logout</Link>}
                     </div>
                 </div>
             </div>
