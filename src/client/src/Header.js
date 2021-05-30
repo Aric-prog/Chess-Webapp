@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import LoginModal from './LoginModal';
 import { Link } from 'react-router-dom';
 import SignUpModal from './SignUpModal';
 import { useAuth } from './firebase/AuthContext';
+import { db } from './firebase/firebase-config';
 
 const Header = () => {
 
@@ -11,6 +12,7 @@ const Header = () => {
     const { signout, currentUser } = useAuth()
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
+    const [username, setUsername] = useState('')
 
     async function handleSubmit(e) {
         e.preventDefault()
@@ -24,6 +26,12 @@ const Header = () => {
         setLoading(false)
     }
 
+    useEffect(() => {
+        db.collection('users').doc(currentUser.uid).get().then(doc => {
+            return setUsername(doc.data().username)
+        })
+    }) 
+    
     return (
         <nav className="navbar">
             <div className="container">
@@ -45,7 +53,7 @@ const Header = () => {
                         }}> Sign up</Link>}
                         {(currentUser!=null) && <Link className="signin" onClick={() =>{
                             setShowSignUp(true);
-                        }}> {currentUser.email} </Link>}
+                        }}> { username } </Link>}
                         {(currentUser!=null) && <Link className="signup" onClick={handleSubmit}> 
                             Logout</Link>}
                     </div>

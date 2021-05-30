@@ -8,6 +8,7 @@ const SignUpModal = (props) => {
     const emailRef = useRef()
     const passwordRef = useRef()
     const confirmPasswordRef = useRef()
+    const usernameRef = useRef()
     const { signup } = useAuth()
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
@@ -24,7 +25,8 @@ const SignUpModal = (props) => {
         try {
             setError('')
             setLoading(true)
-            await signup(emailRef.current.value, passwordRef.current.value)
+            await signup(emailRef.current.value, passwordRef.current.value, 
+                usernameRef.current.value)
         } catch {
             return setError('Failed to create an acount')
         }
@@ -41,7 +43,7 @@ const SignUpModal = (props) => {
                 </div>
                 <form onSubmit={handleSubmit} action="" className="form-container">
                     <input type="text" ref={emailRef} placeholder="&#xf199;  Email address" required/>
-                    <input type="text" placeholder="&#xF007;  Username" required/>
+                    <input type="text" ref={usernameRef} placeholder="&#xF007;  Username" required/>
                     <input type="password" ref={passwordRef} placeholder="&#xF023;  Password" required/>
                     <input type="password" ref={confirmPasswordRef} placeholder="&#xf01e;  Confirm Password" required/>
                     {error && <div>{error}</div>} {/* <- font needs to be changed */}
