@@ -12,6 +12,7 @@ const Play = () => {
     const [fen, setFen] = useState("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
     const [uid, setUid] = useState("");
     const [roomCode, setRoomCode] = useState("");
+    const [side, setSide] = useState("white")
     const { currentUser } = useAuth()
     const game = useRef(new Chess())
     const socket = useRef(null)
@@ -19,17 +20,24 @@ const Play = () => {
     
     useEffect(() => {
         if(currentUser !== null){
-            initSocket(currentUser.getIdToken())
+            initSocket()
         }
     }, [])
 
-    const initSocket = (token) => {
-        socket.current = socketIOClient(ENDPOINT, {
-            extraHeaders: {
-                "authorization" : token
+    const initSocket = () => {
+        
+        currentUser.getIdToken().then(
+            token => {
+                socket.current = socketIOClient(ENDPOINT, {
+                    extraHeaders: {
+                        authorization : "Bearer " + token,
+                        uid : currentUser.uid
+                    }
+                });
+                socket.current.on("connect_error", onConnectError)
+                socket.current.on("move", onReceiveMove);
             }
-        });
-        socket.current.on("move", onReceiveMove);
+        )
     }
 
     const getFen = () => {
@@ -48,8 +56,16 @@ const Play = () => {
         setFen(getFen())
     }
 
+    const onConnectError = (err) => {
+        // Show error message on some random dom element
+        const errMessage = err.message
+    } 
+
     const joinRoom = (roomCode) => {
-        socket.current.emit('join room', roomCode)
+        socket.current.emit('join room', roomCode, (response) => {
+            setSide(response.side)
+            setFen(response.fen)
+        })
     };
 
     const handleSubmit = (event) => {
@@ -60,12 +76,15 @@ const Play = () => {
     return (
         <div className="big-wrapper">
             <div className="game-container">
-                <Board ref={board} game = {game} width = {600} fen = {fen} setFen={setFen} onMove = {onMove}/>
-                <MatchHistory></MatchHistory>
-                <form onSubmit={handleSubmit}>
-                    <input type="text" value={roomCode} onInput={e => setRoomCode(e.target.value)}></input>
-                    <input type="submit" value="Submit"></input>
-                </form>
+                <Board ref={board} game = {game} width = {600} fen = {fen} setFen={setFen} orientation = {side} onMove = {onMove}/>
+                <div className="play-info">
+                    <form onSubmit={handleSubmit} className="room-form">
+                        <p>Create or join room</p>
+                        <input type="text" className="room-input" value={roomCode} onInput={e => setRoomCode(e.target.value)}></input>
+                        <input type="submit" value="Submit"></input>
+                    </form>
+                    <MatchHistory></MatchHistory>
+                </div>
             </div>
         </div>
     );

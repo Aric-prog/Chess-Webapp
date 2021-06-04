@@ -14,30 +14,35 @@ function init_io(io) {
     // Checks if user is authenticated here
     io.use(auth)
     io.on('connect', socket => {
-        console.log("well that's funny");
-        socket.on('join room', (roomCode) => {
+        const uidFromMiddleware = socket.handshake.headers.uid
+        socket.on('join room', (roomCode, callback) => {
             if(!(roomCode in roomInfo)){
                 // Room not in room list, creating room
                 console.log(roomCode)
                 roomInfo[roomCode] = new Room();
             }
-            playerRoom[socket.id] = roomCode;
-            roomInfo[roomCode].assignPlayer(socket.id);
+            playerRoom[uidFromMiddleware] = roomCode;
+            roomInfo[roomCode].assignPlayer(uidFromMiddleware);
             console.log(roomInfo[roomCode].whitePlayerUID, roomInfo[roomCode].blackPlayerUID)
             socket.join(roomCode);
-            console.log("Player : " + socket.id + " has joined room : " + roomCode);
+            console.log("Player : " + uidFromMiddleware + " has joined room : " + roomCode);
             // Callback moment here with pgn
+            callback({
+                side : roomInfo[roomCode].getSideOfPlayer(uidFromMiddleware),
+                fen : roomInfo[roomCode].currentFen
+            })
         })
         socket.on('move', (move, fen, callback) => {
             // If move is valid to current roomCode
             // Get uid and the room
-            const uidFromMiddleware = socket.id
+            // console.log(uidFromMiddleware)
             const currentRoom = roomInfo[playerRoom[uidFromMiddleware]]
-            console.log(currentRoom.currentFen)
             if(currentRoom.currentFen === fen){
                 newFen = validateMove(move, fen)
+                console.log(move.san)
                 if(newFen){
                     currentRoom.setFen(newFen)
+                    currentRoom.history.push(move.san)
                     io.to(playerRoom[uidFromMiddleware]).emit('move', move)
                     callback({status:"ok"})
                 }

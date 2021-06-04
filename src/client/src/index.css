@@ -236,7 +236,6 @@ code {
 .history{
   width: 400px;
   height: 200px;
-  margin-left: 100px;
   margin-top:auto;
   margin-bottom:auto;
   background-color: white;
@@ -249,6 +248,7 @@ code {
   left: 0;
   background-color: rgba(0, 0, 0, 0.6);
 }
+
 
 .modal-inner{
   position: absolute;
@@ -435,4 +435,21 @@ code {
 .member p{
   width: 80%;
   margin: auto;
+}
+
+.play-info{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 100px;
+}
+
+.room-form{
+  display: flex;
+  flex-direction: column;
+}
+
+.room-input{
+  
 }

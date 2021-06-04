@@ -1,7 +1,7 @@
 class Room{
     constructor(){
         this.currentFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
-        this.pgn = ""
+        this.history = []
         this.whitePlayerUID = "";
         this.blackPlayerUID = "";
         this.whiteTimeInSeconds = 60 
@@ -23,7 +23,6 @@ class Room{
     clearIntervals(){
         clearInterval(this.roomTimer)
     }
-
     assignPlayer(uid){
         // Assign players random sides
         if(this.whitePlayerUID !== uid && this.blackPlayerUID !== uid){
@@ -49,6 +48,14 @@ class Room{
             this.whiteTimeInSeconds -= 1
         } else{
             this.blackTimeInSeconds -= 1
+        }
+    }
+
+    getSideOfPlayer(uid){
+        if(this.blackPlayerUID === uid){
+            return "black"
+        } else if(this.whitePlayerUID === uid){
+            return "white"
         }
     }
 }
