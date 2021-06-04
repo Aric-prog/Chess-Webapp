@@ -12,7 +12,7 @@ var playerRoom = {}
 
 function init_io(io) {
     // Checks if user is authenticated here
-    
+    io.use(auth)
     io.on('connect', socket => {
         console.log("well that's funny");
         socket.on('join room', (roomCode) => {
@@ -25,8 +25,8 @@ function init_io(io) {
             roomInfo[roomCode].assignPlayer(socket.id);
             console.log(roomInfo[roomCode].whitePlayerUID, roomInfo[roomCode].blackPlayerUID)
             socket.join(roomCode);
-            console.log("player : " + socket.id + " has joined room : " + roomCode);
-            // Put user socket in a list somewhere, with key being socket and value being the roomCode
+            console.log("Player : " + socket.id + " has joined room : " + roomCode);
+            // Callback moment here with pgn
         })
         socket.on('move', (move, fen, callback) => {
             // If move is valid to current roomCode
@@ -34,7 +34,6 @@ function init_io(io) {
             const uidFromMiddleware = socket.id
             const currentRoom = roomInfo[playerRoom[uidFromMiddleware]]
             console.log(currentRoom.currentFen)
-            console.log(fen)
             if(currentRoom.currentFen === fen){
                 newFen = validateMove(move, fen)
                 if(newFen){
@@ -47,8 +46,6 @@ function init_io(io) {
             callback({status:"not ok"})
         })
     });
-
-    // io.use(auth)
 };
 
 module.exports = init_io

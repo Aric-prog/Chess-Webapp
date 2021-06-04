@@ -27,9 +27,11 @@ const Header = () => {
     }
 
     useEffect(() => {
-        db.collection('users').doc(currentUser.uid).get().then(doc => {
-            return setUsername(doc.data().username)
-        })
+        if(currentUser !== null){
+            db.collection('users').doc(currentUser.uid).get().then(doc => {
+                return setUsername(doc.data().username)
+            })
+        }
     }) 
     
     return (

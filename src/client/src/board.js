@@ -11,7 +11,6 @@ const Board = (props) => {
 	let game = props.game;
 
 	useEffect(() => {
-		console.log("this is called right?")
 		updatePiece()
 	}, [props.fen])
 

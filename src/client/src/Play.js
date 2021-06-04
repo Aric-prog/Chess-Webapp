@@ -2,7 +2,8 @@ import React, {useState, useEffect, useRef} from "react";
 import Board from "./Board"
 import MatchHistory from "./MatchHistory"
 import * as Chess from "chess.js";
-import { auth } from "./firebase/firebase-config"
+import { useAuth } from './firebase/AuthContext';
+import { auth } from "./firebase/firebase-config";
 
 import socketIOClient from "socket.io-client";
 const ENDPOINT = "http://127.0.0.1:5000";
@@ -11,10 +12,26 @@ const Play = () => {
     const [fen, setFen] = useState("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
     const [uid, setUid] = useState("");
     const [roomCode, setRoomCode] = useState("");
+    const { currentUser } = useAuth()
     const game = useRef(new Chess())
     const socket = useRef(null)
     const board = useRef()
     
+    useEffect(() => {
+        if(currentUser !== null){
+            initSocket(currentUser.getIdToken())
+        }
+    }, [])
+
+    const initSocket = (token) => {
+        socket.current = socketIOClient(ENDPOINT, {
+            extraHeaders: {
+                "authorization" : token
+            }
+        });
+        socket.current.on("move", onReceiveMove);
+    }
+
     const getFen = () => {
         return game.current.fen();
     }
@@ -32,34 +49,13 @@ const Play = () => {
     }
 
     const joinRoom = (roomCode) => {
-        console.log("fire")
         socket.current.emit('join room', roomCode)
     };
-
-    useEffect(() => {
-        socket.current = socketIOClient(ENDPOINT);
-        socket.current.on("move", onReceiveMove);
-    }, [])
 
     const handleSubmit = (event) => {
         event.preventDefault()
         joinRoom(roomCode)
     }
-
-    const loginAnon= () => {
-        // auth().signInAnonymously()
-        //     .then((userCred) => {
-        //         setUid(userCred.user.uid)
-        //         console.log("success")
-        //     })
-        //     .catch((error) => {
-        //         console.log(error)
-        //     })
-        game.current.load("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
-        setFen(getFen())
-        
-        // console.log(game.current.fen())
-    }   
 
     return (
         <div className="big-wrapper">
@@ -70,7 +66,6 @@ const Play = () => {
                     <input type="text" value={roomCode} onInput={e => setRoomCode(e.target.value)}></input>
                     <input type="submit" value="Submit"></input>
                 </form>
-                <button type="button" onClick={loginAnon}> Login Anonymously </button>
             </div>
         </div>
     );

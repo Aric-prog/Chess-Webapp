@@ -1,6 +1,7 @@
 class Room{
     constructor(){
         this.currentFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+        this.pgn = ""
         this.whitePlayerUID = "";
         this.blackPlayerUID = "";
         this.whiteTimeInSeconds = 60 
