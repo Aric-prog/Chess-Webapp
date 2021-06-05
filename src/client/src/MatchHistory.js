@@ -4,7 +4,7 @@ class MatchHistory extends React.Component{
     render(){
         return(
             <div className="history">
-                test
+                history box goes here, modify size as you see fit
             </div>
         )
     }

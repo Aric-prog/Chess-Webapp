@@ -451,5 +451,6 @@ code {
 }
 
 .room-input{
-  
+  padding: 10px;
+  min-width: 100px;
 }

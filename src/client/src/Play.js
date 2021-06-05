@@ -25,7 +25,6 @@ const Play = () => {
     }, [])
 
     const initSocket = () => {
-        
         currentUser.getIdToken().then(
             token => {
                 socket.current = socketIOClient(ENDPOINT, {
@@ -79,9 +78,9 @@ const Play = () => {
                 <Board ref={board} game = {game} width = {600} fen = {fen} setFen={setFen} orientation = {side} onMove = {onMove}/>
                 <div className="play-info">
                     <form onSubmit={handleSubmit} className="room-form">
-                        <p>Create or join room</p>
+                        <p>Info : </p>
                         <input type="text" className="room-input" value={roomCode} onInput={e => setRoomCode(e.target.value)}></input>
-                        <input type="submit" value="Submit"></input>
+                        <input type="submit" value="Create or join room" className="room-button"></input>
                     </form>
                     <MatchHistory></MatchHistory>
                 </div>

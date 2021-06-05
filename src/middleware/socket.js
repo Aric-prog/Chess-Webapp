@@ -27,6 +27,7 @@ function init_io(io) {
             socket.join(roomCode);
             console.log("Player : " + uidFromMiddleware + " has joined room : " + roomCode);
             // Callback moment here with pgn
+            console.log(roomInfo[roomCode].getSideOfPlayer(uidFromMiddleware))
             callback({
                 side : roomInfo[roomCode].getSideOfPlayer(uidFromMiddleware),
                 fen : roomInfo[roomCode].currentFen

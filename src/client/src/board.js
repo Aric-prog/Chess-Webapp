@@ -21,7 +21,7 @@ const Board = (props) => {
         	to: targetSquare,
         	promotion: "q" // always promote to a queen for example simplicity
         });
-    
+		
         // illegal move
         if (move === null) return;
 		props.onMove(move, props.fen)
@@ -47,11 +47,10 @@ const Board = (props) => {
 	};
 	
     return(
-		<Chessboard width={width} position={props.fen} onDrop={onDrop} squareStyles={squareStyles} boardStyle={{
+		<Chessboard width={width} position={props.fen} orientation={props.orientation} onDrop={onDrop} squareStyles={squareStyles} boardStyle={{
 			borderRadius: "5px",
 			boxShadow : "0 5px 15px rgba(0, 0, 0, 0.5)"}} />
 	)
-
 }
 
 export default Board
