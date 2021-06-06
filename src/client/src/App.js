@@ -6,6 +6,7 @@ const { default: Home } = require("./Home");
 const { default: Learn } = require("./Learn");
 const { default: Play } = require("./Play")
 const { default: About } = require("./About");
+const { default: History } = require("./History");
 
 function App() {
 
@@ -27,6 +28,9 @@ function App() {
               </Route>
               <Route exact path="/about">
                 <About></About>
+              </Route>
+              <Route exact path="/history">
+                <History></History>
               </Route>
             </Switch>
             {/* <SignUpModal></SignUpModal> */}

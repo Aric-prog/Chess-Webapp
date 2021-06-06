@@ -1,19 +1,20 @@
 import '../node_modules/font-awesome/css/font-awesome.min.css';
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
+import { useSpring, animated } from 'react-spring';
 import { useAuth } from './firebase/AuthContext';
 import { Link } from 'react-router-dom';
 import ReactDom from 'react-dom'
 import SignUpModal from './SignUpModal';
 
 
-const LoginModal = (props) => {
+const LoginModal = ({ showLogin, setShowLogin }) => {
 
     const emailRef = useRef()
     const passwordRef = useRef()
     const { signin } = useAuth()
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
-    const linkTemp = "#"; 
+    const linkTemp = "#";
 
 
     async function handleSubmit(e) {
@@ -26,30 +27,64 @@ const LoginModal = (props) => {
             return setError('Failed to create an acount')
         }
         setLoading(false)
-
     }
 
     const [showSignUp, setShowSignUp] = useState(false);
-    
-    return(
+    const modalRef = useRef()
+    const animation = useSpring({
+        config: {
+            duration: 1000
+        },
+        opacity: showLogin ? 1 : 0,
+        transform: showLogin ? 'translateY(35%)' : 'translateY(-100%)'
+    })
 
-        <div className="modal">
-            <div className="modal-inner">
-                <i class="far fa-times-circle" onClick={props.onClose}></i>
-                <div className="modal-header">
-                    <h1>Login</h1>
-                </div>
-                <form onSubmit={handleSubmit} action="" className="form-container">
-                    <input type="text" ref={emailRef} placeholder="&#xF007;  Email address" required />
-                    <input type="password" ref={passwordRef} placeholder="&#xF023;  Password" required />
-                    <a href={linkTemp} className="forgot-password">Forgot Password?</a>
-                    <button disabled={loading} type="submit" value="Login">LOGIN</button>
-                </form>
-                <p>Don't have an account? <Link className="modal-signup" onClick={props.onClose}>Sign up now!</Link></p>
-            </div>
-            {/* {showSignUp && <SignUpModal open={showSignUp} onClose={() => setShowSignUp(false)}></SignUpModal>} */}
+    const closeModal = e => {
+        if(modalRef.current === e.target){
+            setShowLogin(false);
+        }
+    }
+
+    const onEscapePressed = useCallback(
+        e => {
+        if(e.key === 'Escape' && showLogin){
+            setShowLogin(false)
+        }
+    }, [setShowLogin, showLogin]);
+
+    useEffect(() => {
+        document.addEventListener('keydown', onEscapePressed);
+        return () => document.removeEventListener('keydown', onEscapePressed)
+    }, [onEscapePressed]);
+
+
+    return (
+        <div>
+            {showLogin ?
+                <div className="modal" ref={modalRef} onClick={closeModal}>
+                    <animated.div style={animation}>
+                        <div className="modal-inner">
+                            <i class="far fa-times-circle" onClick={() => setShowLogin(prev => !prev)}></i>
+                            <div className="modal-header">
+                                <h1>Login</h1>
+                            </div>
+                            <form onSubmit={handleSubmit} action="" className="form-container">
+                                <input type="text" ref={emailRef} placeholder="&#xF007;  Email address" required />
+                                <input type="password" ref={passwordRef} placeholder="&#xF023;  Password" required />
+                                <a href={linkTemp} className="forgot-password">Forgot Password?</a>
+                                <button disabled={loading} type="submit" value="Login">LOGIN</button>
+                            </form>
+                            <p>Don't have an account? <Link className="modal-signup" onClick={() => setShowLogin(prev => !prev)}>Sign up now!</Link></p>
+                        </div>
+                        {/* {showSignUp && <SignUpModal open={showSignUp} onClose={() => setShowSignUp(false)}></SignUpModal>} */}
+                    </animated.div>
+                </div> : null}
+
+
         </div>
-        
+
+
+
         // document.getElementById('portal')
     );
 }

@@ -192,14 +192,20 @@ code {
 }
 
 .piece{
-  background-color: #791a3d;
+  background-color: #ffe2d6;
   margin: 20px 25px;
   max-width: 100%;
   width: 29.42%;
   padding-top: 50px;
-  border-radius: 30px;
-  box-shadow: 1px 1px #888888;
+  border-radius: 20px;
+  box-shadow: inset 0 0 10px #000000;
   padding-bottom: 20px;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.piece:hover{
+  background-color: #791a3d;
 }
 
 .piece h1{
@@ -242,6 +248,8 @@ code {
 }
 .modal{
   position: fixed;
+  width: 100%;
+  height: 100%;
   top: 0;
   right: 0;
   bottom: 0;
@@ -251,10 +259,10 @@ code {
 
 
 .modal-inner{
-  position: absolute;
-  top: 17%;
+  position: relative;
+  /* top: 17%;
   right: 0;
-  left: 0;
+  left: 0; */
   width: 25%;
   padding: 20px 30px;
   margin: auto;
@@ -262,6 +270,7 @@ code {
   color: #fcd02f;
   border-radius: 8px;
   text-align: center;
+  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.2);
 }
 
 .modal-inner a{
@@ -287,11 +296,18 @@ code {
   font-size: 25px;
 }
 
+.confirmPasswordError{
+  padding-bottom: 20px;
+}
 
 .form-container{
   display: flex;
   flex-direction: column;
   position: relative;
+}
+
+.form-container{
+
 }
 
 .form-container input{

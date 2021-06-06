@@ -26,13 +26,21 @@ const Header = () => {
         setLoading(false)
     }
 
+    const openLogin = () => {
+        setShowLogin(prev => !prev);
+    };
+
+    const openSignUp = () => {
+        setShowSignUp(prev => !prev);
+    };
+
     useEffect(() => {
         if(currentUser !== null){
             db.collection('users').doc(currentUser.uid).get().then(doc => {
                 return setUsername(doc.data().username)
             })
         }
-    }) 
+    }) // later give a second parameter, if no parameter this thing goes on everytime re renders
     
     return (
         <nav className="navbar">
@@ -47,22 +55,16 @@ const Header = () => {
                 </div>
                 <div className="header-right">
                     <div className="sign-container">        
-                        {(currentUser==null) && <Link className="signin" onClick={() => {
-                            setShowLogin(true);
-                        }}> Login</Link>}
-                        {(currentUser==null) && <Link className="signup" onClick={() =>{
-                            setShowSignUp(true);
-                        }}> Sign up</Link>}
-                        {(currentUser!=null) && <Link className="signin" onClick={() =>{
-                            setShowSignUp(true);
-                        }}> { username } </Link>}
+                        {(currentUser==null) && <Link className="signin" onClick={openLogin}> Login</Link>}
+                        {(currentUser==null) && <Link className="signup" onClick={openSignUp}> Sign up</Link>}
+                        {(currentUser!=null) && <Link to="/history" className="signin"> { username } </Link>}
                         {(currentUser!=null) && <Link className="signup" onClick={handleSubmit}> 
                             Logout</Link>}
                     </div>
                 </div>
             </div>
-            {showLogin && <LoginModal open={showLogin} onClose={() => setShowLogin(false)}></LoginModal>}
-            {showSignUp && <SignUpModal open={showSignUp} onClose={() => setShowSignUp(false)}></SignUpModal>}
+            {showLogin && <LoginModal showLogin={showLogin} setShowLogin={setShowLogin}></LoginModal>}
+            {showSignUp && <SignUpModal showSignUp={showSignUp} setShowSignUp={setShowSignUp}></SignUpModal>}
 
 
         </nav>
