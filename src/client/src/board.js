@@ -26,28 +26,14 @@ const Board = (props) => {
         if (move === null) return;
 		props.onMove(move, props.fen)
 		props.setFen(game.current.fen());
-		setSquareStyles(squareStyling());
     };
 
     const updatePiece = () => {
 		props.setFen(props.fen);
-		// setSquareStyles(squareStyling())
     }
 
-	const squareStyling = () => {
-		const history = game.current.history({verbose : true})
-		const sourceSquare = history[history.length - 1].from;
-		const targetSquare = history[history.length - 1].to;
-		const bgColor = "rgba(255, 255, 0, 0.4)";
-	
-		return {
-			sourceSquare : {backgroundColor : bgColor},
-			targetSquare : {backgroundColor : bgColor}
-		};
-	};
-	
     return(
-		<Chessboard width={width} position={props.fen} orientation={props.orientation} onDrop={onDrop} squareStyles={squareStyles} boardStyle={{
+		<Chessboard width={width} position={props.fen} orientation={props.orientation} onDrop={onDrop} boardStyle={{
 			borderRadius: "5px",
 			boxShadow : "0 5px 15px rgba(0, 0, 0, 0.5)"}} />
 	)

@@ -1,14 +1,15 @@
 import { useState } from "react";
 import Members from './Members';
 import bryan from './images/bepe.jpg'
+import aric from './images/bepe.jpg'
 
 const About = () => {
 
     const [members, setMembers] = useState([
         {
             name: 'Aric Hernando',
-            image: bryan,
-            desc: `I'm a weeb`
+            image: aric,
+            desc: `I'm a computer science student. Everyday it gets harder, send help.`
         },
         {
             name: 'Bryan Putra',
