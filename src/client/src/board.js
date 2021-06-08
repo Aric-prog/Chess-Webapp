@@ -33,7 +33,7 @@ const Board = (props) => {
     }
 
     return(
-		<Chessboard width={width} position={props.fen} orientation={props.orientation} onDrop={onDrop} boardStyle={{
+		<Chessboard width={width} position={props.fen} orientation={props.orientation} draggable={props.draggable} onDrop={onDrop} boardStyle={{
 			borderRadius: "5px",
 			boxShadow : "0 5px 15px rgba(0, 0, 0, 0.5)"}} />
 	)
