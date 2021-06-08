@@ -306,10 +306,6 @@ code {
   position: relative;
 }
 
-.form-container{
-
-}
-
 .form-container input{
   padding: 10px 12px;
   margin-bottom: 20px;
@@ -389,6 +385,10 @@ code {
 .form-container button:hover {
   color: #fff;
   cursor: pointer;
+}
+
+.reset-pass-btn{
+  margin-bottom: 20px;
 }
 
 .fa-times-circle:hover{

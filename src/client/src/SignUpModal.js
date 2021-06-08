@@ -37,7 +37,9 @@ const SignUpModal = ({ showSignUp, setShowSignUp, showLogin, setShowLogin }) => 
             setLoading(true)
             await signup(emailRef.current.value, passwordRef.current.value,
                 usernameRef.current.value)
-            setShowSignUp(prev => !prev)
+            alert('Signed up successfully')
+            setError('')
+            openSignUp()
 
         } catch {
             return setError('Failed to create an account')
@@ -57,7 +59,7 @@ const SignUpModal = ({ showSignUp, setShowSignUp, showLogin, setShowLogin }) => 
     const modalRef = useRef()
     const animation = useSpring({
         config: {
-            duration: 1000
+            duration: 400
         },
         opacity: showSignUp ? 1 : 0,
         transform: showSignUp ? 'translateY(30%)' : 'translateY(-100%)'
