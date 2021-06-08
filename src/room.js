@@ -30,17 +30,20 @@ class Room{
                 switch(Math.floor(Math.random() * 2)){
                     case 0:
                         this.setWhiteUID(uid)
-                        break;
+                        return "white"
                     case 1:
                         this.setBlackUID(uid)
-                        break;
+                        return "black"
                 }
             } else if(this.whitePlayerUID === ""){
                 this.whitePlayerUID = uid
+                return "white"
             } else if(this.blackPlayerUID === ""){
                 this.blackPlayerUID = uid
+                return "black"
             }
         }
+        return ""
     }
 
     decrementTime(){

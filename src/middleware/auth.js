@@ -14,8 +14,12 @@ function authenticated(req, res, next){
     admin
         .auth()
         .verifyIdToken(token)
-        .then(() => next())
-        .catch(() => res.send({message : "Could not authorize"}).status(403));
+        .then((decodedToken) => {
+            res.locals.uid = decodedToken.uid;
+            next()
+        })
+        .catch((error) => res.send({message : error}).status(403));
+    
 }
 
 module.exports = authenticated;

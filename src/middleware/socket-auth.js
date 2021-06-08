@@ -14,7 +14,10 @@ function auth(socket, next) {
     const token = headerToken.split(" ")[1];
     admin.auth()
         .verifyIdToken(token)
-        .then(() => next())
+        .then(decodedToken => {
+            socket.uid = decodedToken.uid
+            next()
+        })
         .catch(() => next(new Error("Could not authenticate")));
 }
 

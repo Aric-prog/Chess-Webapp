@@ -14,7 +14,7 @@ function init_io(io) {
     // Checks if user is authenticated here
     io.use(auth)
     io.on('connect', socket => {
-        const uidFromMiddleware = socket.handshake.headers.uid
+        const uidFromMiddleware = socket.uid;
         socket.on('join room', (roomCode, callback) => {
             if(!(roomCode in roomInfo)){
                 // Room not in room list, creating room
@@ -22,12 +22,11 @@ function init_io(io) {
                 roomInfo[roomCode] = new Room();
             }
             playerRoom[uidFromMiddleware] = roomCode;
-            roomInfo[roomCode].assignPlayer(uidFromMiddleware);
             console.log(roomInfo[roomCode].whitePlayerUID, roomInfo[roomCode].blackPlayerUID)
             socket.join(roomCode);
             console.log("Player : " + uidFromMiddleware + " has joined room : " + roomCode);
             // Callback moment here with pgn
-            console.log(roomInfo[roomCode].getSideOfPlayer(uidFromMiddleware))
+            console.log(roomInfo[roomCode].assignPlayer(uidFromMiddleware))
             callback({
                 side : roomInfo[roomCode].getSideOfPlayer(uidFromMiddleware),
                 fen : roomInfo[roomCode].currentFen
@@ -36,7 +35,6 @@ function init_io(io) {
         socket.on('move', (move, fen, callback) => {
             // If move is valid to current roomCode
             // Get uid and the room
-            // console.log(uidFromMiddleware)
             const currentRoom = roomInfo[playerRoom[uidFromMiddleware]]
             if(currentRoom.currentFen === fen){
                 newFen = validateMove(move, fen)
@@ -45,11 +43,11 @@ function init_io(io) {
                     currentRoom.setFen(newFen)
                     currentRoom.history.push(move.san)
                     io.to(playerRoom[uidFromMiddleware]).emit('move', move)
-                    callback({status:"ok"})
+                    callback({status:"move accepted"})
                 }
             }
             // Move denied, refresh browser
-            callback({status:"not ok"})
+            callback({status:"move denied"})
         })
     });
 };
