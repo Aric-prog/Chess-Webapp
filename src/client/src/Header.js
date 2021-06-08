@@ -58,13 +58,13 @@ const Header = () => {
                         {(currentUser==null) && <Link className="signin" onClick={openLogin}> Login</Link>}
                         {(currentUser==null) && <Link className="signup" onClick={openSignUp}> Sign up</Link>}
                         {(currentUser!=null) && <Link to="/history" className="signin"> { username } </Link>}
-                        {(currentUser!=null) && <Link className="signup" onClick={handleSubmit}> 
+                        {(currentUser!=null) && <Link to="/" className="signup" onClick={handleSubmit}> 
                             Logout</Link>}
                     </div>
                 </div>
             </div>
-            {showLogin && <LoginModal showLogin={showLogin} setShowLogin={setShowLogin}></LoginModal>}
-            {showSignUp && <SignUpModal showSignUp={showSignUp} setShowSignUp={setShowSignUp}></SignUpModal>}
+            {showLogin && <LoginModal showLogin={showLogin} setShowLogin={setShowLogin} showSignUp={showSignUp} setShowSignUp={setShowSignUp}></LoginModal>}
+            {showSignUp && <SignUpModal showSignUp={showSignUp} setShowSignUp={setShowSignUp} showLogin={showLogin} setShowLogin={setShowLogin}></SignUpModal>}
 
 
         </nav>

@@ -3,18 +3,15 @@ import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { useSpring, animated } from 'react-spring';
 import { useAuth } from './firebase/AuthContext';
 import { Link } from 'react-router-dom';
-import ReactDom from 'react-dom'
-import SignUpModal from './SignUpModal';
 
-
-const LoginModal = ({ showLogin, setShowLogin }) => {
+const LoginModal = ({ showLogin, setShowLogin, showSignUp , setShowSignUp }) => {
 
     const emailRef = useRef()
     const passwordRef = useRef()
     const { signin } = useAuth()
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
-    const linkTemp = "#";
+    const linkTemp = '#'
 
 
     async function handleSubmit(e) {
@@ -24,12 +21,12 @@ const LoginModal = ({ showLogin, setShowLogin }) => {
             setLoading(true)
             await signin(emailRef.current.value, passwordRef.current.value)
         } catch {
-            return setError('Failed to create an acount')
+            return setError('Invalid email or password')
         }
         setLoading(false)
     }
 
-    const [showSignUp, setShowSignUp] = useState(false);
+    // const [showSignUp, setShowSignUp] = useState(false);
     const modalRef = useRef()
     const animation = useSpring({
         config: {
@@ -38,6 +35,14 @@ const LoginModal = ({ showLogin, setShowLogin }) => {
         opacity: showLogin ? 1 : 0,
         transform: showLogin ? 'translateY(35%)' : 'translateY(-100%)'
     })
+
+    const openLogin = () => {
+        setShowLogin(prev => !prev);
+    };
+
+    const openSignUp = () => {
+        setShowSignUp(prev => !prev);
+    };
 
     const closeModal = e => {
         if(modalRef.current === e.target){
@@ -64,19 +69,23 @@ const LoginModal = ({ showLogin, setShowLogin }) => {
                 <div className="modal" ref={modalRef} onClick={closeModal}>
                     <animated.div style={animation}>
                         <div className="modal-inner">
-                            <i class="far fa-times-circle" onClick={() => setShowLogin(prev => !prev)}></i>
+                            <i class="far fa-times-circle" onClick={openLogin}></i>
                             <div className="modal-header">
                                 <h1>Login</h1>
                             </div>
                             <form onSubmit={handleSubmit} action="" className="form-container">
                                 <input type="text" ref={emailRef} placeholder="&#xF007;  Email address" required />
                                 <input type="password" ref={passwordRef} placeholder="&#xF023;  Password" required />
+                                {error && <div className="form-error">{error}</div>}
                                 <a href={linkTemp} className="forgot-password">Forgot Password?</a>
+                                {/* <Link to="/" className="signup" onClick={}> Forgot password?</Link> */}
                                 <button disabled={loading} type="submit" value="Login">LOGIN</button>
                             </form>
-                            <p>Don't have an account? <Link className="modal-signup" onClick={() => setShowLogin(prev => !prev)}>Sign up now!</Link></p>
+                            <p>Don't have an account? <Link className="modal-signup" onClick={() => {
+                                openLogin();
+                                openSignUp();
+                            }}>Sign up now!</Link></p>
                         </div>
-                        {/* {showSignUp && <SignUpModal open={showSignUp} onClose={() => setShowSignUp(false)}></SignUpModal>} */}
                     </animated.div>
                 </div> : null}
 
