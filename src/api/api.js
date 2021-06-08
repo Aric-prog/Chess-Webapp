@@ -27,8 +27,6 @@ router.post('/user/history', function(req,res){
             }
         }
     )
-
-    
 })
 
 router.get('/token', function(req,res){

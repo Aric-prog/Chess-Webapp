@@ -1,5 +1,4 @@
 const { Chess } = require('chess.js')
-const admin = require("./admin");
 const auth = require("./socket-auth")
 const { Room } = require("../room")
 const chess = new Chess()
@@ -29,7 +28,9 @@ function init_io(io) {
             console.log(roomInfo[roomCode].assignPlayer(uidFromMiddleware))
             callback({
                 side : roomInfo[roomCode].getSideOfPlayer(uidFromMiddleware),
-                fen : roomInfo[roomCode].currentFen
+                fen : roomInfo[roomCode].currentFen,
+                whitePlayerName : roomInfo[roomCode].whitePlayerName,
+                blackPlayerName : roomInfo[roomCode].blackPlayerName
             })
         })
         socket.on('move', (move, fen, callback) => {

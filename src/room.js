@@ -1,9 +1,15 @@
+const admin = require("./admin");
+
 class Room{
     constructor(){
         this.currentFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
         this.history = []
         this.whitePlayerUID = "";
+        this.whitePlayerName = "";
+        
         this.blackPlayerUID = "";
+        this.blackPlayerName = "";
+
         this.whiteTimeInSeconds = 60 
         this.blackTimeInSeconds = 60 
     }
@@ -13,9 +19,25 @@ class Room{
 
     setBlackUID(uid){
         this.blackPlayerUID = uid 
+        db = admin.firestore()
+        db.collection("users").doc(uid).get().then(
+            doc => {
+                if(doc.exists){
+                    this.blackPlayerName = doc.data().username
+                }
+            }
+        )
     }
     setWhiteUID(uid){
         this.whitePlayerUID = uid
+        db = admin.firestore()
+        db.collection("users").doc(uid).get().then(
+            doc => {
+                if(doc.exists){
+                    this.whitePlayerName = doc.data().username
+                }
+            }
+        )
     }
     createIntervals(){
         this.roomTimer = setInterval(this.decrementTime(), 1000)
@@ -36,10 +58,10 @@ class Room{
                         return "black"
                 }
             } else if(this.whitePlayerUID === ""){
-                this.whitePlayerUID = uid
+                this.setWhiteUID(uid)
                 return "white"
             } else if(this.blackPlayerUID === ""){
-                this.blackPlayerUID = uid
+                this.setBlackUID(uid)
                 return "black"
             }
         }
