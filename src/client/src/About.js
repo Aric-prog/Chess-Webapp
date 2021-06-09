@@ -29,8 +29,9 @@ const About = () => {
             <div className="container">
                 <div className="thanks-wrapper">
                     <h1>THANKS FOR PLAYING!</h1>
-                    <p>This was a project that we were forced to make u fucks kill me pls dunia ini sesat :DDDDDDDDDDDDD
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam quam cumque culpa, optio autem vel tempora fuga earum eveniet dolorem temporibus vero cum deleniti, quibusdam corporis quod dicta vitae atque.Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam quam cumque culpa, optio autem vel tempora fuga earum eveniet dolorem temporibus vero cum deleniti, quibusdam corporis quod dicta vitae atque.</p>
+                    <p>This was a project that we made for our Web Application Development and Security course. It involves several technologies and framework such as React, Nodejs, Socket.io, and Firebase.
+                        
+                    </p>
                 </div>
                 <div className="member-wrapper">
                     <Members members={members}></Members>

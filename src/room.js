@@ -1,4 +1,4 @@
-const admin = require("./admin");
+const admin = require("./middleware/admin");
 
 class Room{
     constructor(){
@@ -19,7 +19,7 @@ class Room{
 
     setBlackUID(uid){
         this.blackPlayerUID = uid 
-        db = admin.firestore()
+        const db = admin.firestore()
         db.collection("users").doc(uid).get().then(
             doc => {
                 if(doc.exists){
@@ -30,7 +30,7 @@ class Room{
     }
     setWhiteUID(uid){
         this.whitePlayerUID = uid
-        db = admin.firestore()
+        const db = admin.firestore()
         db.collection("users").doc(uid).get().then(
             doc => {
                 if(doc.exists){

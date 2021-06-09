@@ -17,18 +17,18 @@ function init_io(io) {
         socket.on('join room', (roomCode, callback) => {
             if(!(roomCode in roomInfo)){
                 // Room not in room list, creating room
-                console.log(roomCode)
                 roomInfo[roomCode] = new Room();
             }
             playerRoom[uidFromMiddleware] = roomCode;
-            console.log(roomInfo[roomCode].whitePlayerUID, roomInfo[roomCode].blackPlayerUID)
             socket.join(roomCode);
+            
+            console.log(roomInfo[roomCode].whitePlayerUID, roomInfo[roomCode].blackPlayerUID)
             console.log("Player : " + uidFromMiddleware + " has joined room : " + roomCode);
             // Callback moment here with pgn
-            console.log(roomInfo[roomCode].assignPlayer(uidFromMiddleware))
             callback({
-                side : roomInfo[roomCode].getSideOfPlayer(uidFromMiddleware),
+                side : roomInfo[roomCode].assignPlayer(uidFromMiddleware),
                 fen : roomInfo[roomCode].currentFen,
+                pgn : roomInfo[roomCode].history,
                 whitePlayerName : roomInfo[roomCode].whitePlayerName,
                 blackPlayerName : roomInfo[roomCode].blackPlayerName
             })
@@ -39,12 +39,11 @@ function init_io(io) {
             const currentRoom = roomInfo[playerRoom[uidFromMiddleware]]
             if(currentRoom.currentFen === fen){
                 newFen = validateMove(move, fen)
-                console.log(move.san)
                 if(newFen){
                     currentRoom.setFen(newFen)
                     currentRoom.history.push(move.san)
                     io.to(playerRoom[uidFromMiddleware]).emit('move', move)
-                    callback({status:"move accepted"})
+                    callback({status:"move accepted", move: move})
                 }
             }
             // Move denied, refresh browser
