@@ -3,12 +3,15 @@ import LoginModal from './LoginModal';
 import { Link } from 'react-router-dom';
 import SignUpModal from './SignUpModal';
 import { useAuth } from './firebase/AuthContext';
+import { useSpring, animated } from 'react-spring';
 import { db } from './firebase/firebase-config';
+import ForgotPasswordModal from './ForgotPasswordModal';
 
 const Header = () => {
 
     const [showLogin, setShowLogin] = useState(false);
     const [showSignUp, setShowSignUp] = useState(false);
+    const [showResetPass, setShowResetPass] = useState(false);
     const { signout, currentUser } = useAuth()
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
@@ -58,13 +61,14 @@ const Header = () => {
                         {(currentUser==null) && <Link className="signin" onClick={openLogin}> Login</Link>}
                         {(currentUser==null) && <Link className="signup" onClick={openSignUp}> Sign up</Link>}
                         {(currentUser!=null) && <Link to="/history" className="signin"> { username } </Link>}
-                        {(currentUser!=null) && <Link className="signup" onClick={handleSubmit}> 
+                        {(currentUser!=null) && <Link to="/" className="signup" onClick={handleSubmit}> 
                             Logout</Link>}
                     </div>
                 </div>
             </div>
-            {showLogin && <LoginModal showLogin={showLogin} setShowLogin={setShowLogin}></LoginModal>}
-            {showSignUp && <SignUpModal showSignUp={showSignUp} setShowSignUp={setShowSignUp}></SignUpModal>}
+            <LoginModal showLogin={showLogin} setShowLogin={setShowLogin} showSignUp={showSignUp} setShowSignUp={setShowSignUp} showResetPass={showResetPass} setShowResetPass={setShowResetPass}></LoginModal>
+            <SignUpModal showSignUp={showSignUp} setShowSignUp={setShowSignUp} showLogin={showLogin} setShowLogin={setShowLogin}></SignUpModal>
+            <ForgotPasswordModal showResetPass={showResetPass} setShowResetPass={setShowResetPass} showLogin={showLogin} setShowLogin={setShowLogin} showSignUp={showSignUp} setShowSignUp={setShowSignUp}></ForgotPasswordModal>
 
 
         </nav>

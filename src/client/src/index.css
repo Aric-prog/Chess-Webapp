@@ -294,7 +294,7 @@ code {
   font-size: 25px;
 }
 
-.confirmPasswordError{
+.form-error{
   padding-bottom: 20px;
 }
 
@@ -302,10 +302,6 @@ code {
   display: flex;
   flex-direction: column;
   position: relative;
-}
-
-.form-container{
-
 }
 
 .form-container input{
@@ -387,6 +383,10 @@ code {
 .form-container button:hover {
   color: #fff;
   cursor: pointer;
+}
+
+.reset-pass-btn{
+  margin-bottom: 20px;
 }
 
 .fa-times-circle:hover{
