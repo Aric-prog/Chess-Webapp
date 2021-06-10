@@ -4,7 +4,7 @@ import { useSpring, animated } from 'react-spring';
 import { useAuth } from './firebase/AuthContext';
 import { Link } from 'react-router-dom';
 
-const ForgotPasswordModal = ({ showLogin, setShowLogin, showSignUp , setShowSignUp, showResetPass, setShowResetPass }) => {
+const ForgotPasswordModal = ({ showLogin, setShowLogin, showResetPass, setShowResetPass }) => {
 
     const emailRef = useRef()
     const { resetPassword } = useAuth()
@@ -27,7 +27,6 @@ const ForgotPasswordModal = ({ showLogin, setShowLogin, showSignUp , setShowSign
         setLoading(false)
     }
 
-    // const [showSignUp, setShowSignUp] = useState(false);
     const modalRef = useRef()
     const animation = useSpring({
         config: {

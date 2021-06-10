@@ -11,23 +11,6 @@ const LoginModal = ({ showLogin, setShowLogin, showSignUp , setShowSignUp, showR
     const { signin } = useAuth()
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
-    const linkTemp = '#'
-
-
-    async function handleSubmit(e) {
-        e.preventDefault()
-        try {
-            setError('')
-            setLoading(true)
-            await signin(emailRef.current.value, passwordRef.current.value)
-            alert('Logged in successfully')
-            setError('')
-            openLogin();
-        } catch {
-            return setError('Invalid email or password')
-        }
-        setLoading(false)
-    }
 
     // const [showSignUp, setShowSignUp] = useState(false);
     const modalRef = useRef()
@@ -41,6 +24,7 @@ const LoginModal = ({ showLogin, setShowLogin, showSignUp , setShowSignUp, showR
 
     const openLogin = () => {
         setShowLogin(prev => !prev);
+        setError('')
     };
 
     const openSignUp = () => {
@@ -56,6 +40,7 @@ const LoginModal = ({ showLogin, setShowLogin, showSignUp , setShowSignUp, showR
     const closeModal = e => {
         if(modalRef.current === e.target){
             setShowLogin(false);
+            setError('')
         }
     }
 
@@ -70,6 +55,21 @@ const LoginModal = ({ showLogin, setShowLogin, showSignUp , setShowSignUp, showR
         document.addEventListener('keydown', onEscapePressed);
         return () => document.removeEventListener('keydown', onEscapePressed)
     }, [onEscapePressed]);
+
+    async function handleSubmit(e) {
+        e.preventDefault()
+        try {
+            setError('')
+            setLoading(true)
+            await signin(emailRef.current.value, passwordRef.current.value)
+            alert('Logged in successfully')
+            setError('')
+            openLogin();
+        } catch {
+            setError('Invalid email or password')
+        }
+        setLoading(false)
+    }
 
 
     return (
