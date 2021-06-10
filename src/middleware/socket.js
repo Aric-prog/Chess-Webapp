@@ -18,20 +18,17 @@ function init_io(io) {
         socket.on('join room', (roomCode, callback) => {
             if(!(roomCode in roomInfo)){
                 // Room not in room list, creating room
-                roomInfo[roomCode] = new Room();
+                roomInfo[roomCode] = new Room(roomCode, roomFilled);
             }
             playerRoom[uidFromMiddleware] = roomCode;
             socket.join(roomCode);
             
-            console.log(roomInfo[roomCode].whitePlayerUID, roomInfo[roomCode].blackPlayerUID)
             // Callback moment here with pgn
             callback({
                 side : roomInfo[roomCode].assignPlayer(uidFromMiddleware),
                 fen : roomInfo[roomCode].currentFen,
                 pgn : roomInfo[roomCode].history
             })
-            console.log("White player : " + roomInfo[roomCode].whitePlayerName);
-            console.log("Black player : " + roomInfo[roomCode].blackPlayerName);
         })
         socket.on('move', (move, fen, callback) => {
             // If move is valid to current roomCode
@@ -49,7 +46,6 @@ function init_io(io) {
             // Move denied, refresh browser
             callback({status:"move denied"})
         })
-
         socket.on('game over', (fen, pgn, side) => {
             const currentRoom = roomInfo[playerRoom[uidFromMiddleware]];
             const roomKey = playerRoom[uidFromMiddleware];
@@ -96,9 +92,15 @@ function init_io(io) {
             }
         })
     });
+
+    const roomFilled = (roomCode, name1, name2) => {
+        io.to(roomCode).emit('room filled', name1, name2)
+    }
 };
 
 module.exports = init_io
+
+
 
 const validateMove = function(move, fen){
     if(chess.load(fen)){

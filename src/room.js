@@ -1,7 +1,7 @@
 const admin = require("./middleware/admin");
 
 class Room{
-    constructor(){
+    constructor(roomCode, roomFilledCallback){
         this.currentFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
         this.history = []
         this.whitePlayerUID = "";
@@ -10,8 +10,10 @@ class Room{
         this.blackPlayerUID = "";
         this.blackPlayerName = "";
 
-        this.whiteTimeInSeconds = 60 
-        this.blackTimeInSeconds = 60 
+        this.whiteTimeInSeconds = 60; 
+        this.blackTimeInSeconds = 60;
+        this.roomCode = roomCode;
+        this.roomFilled = roomFilledCallback
     }
     setFen(fen){
         this.currentFen = fen
@@ -26,7 +28,9 @@ class Room{
                     this.blackPlayerName = doc.data().username
                 }
             }
-        )
+        ).then(() => {
+            this.checkFull()
+        })
     }
     setWhiteUID(uid){
         this.whitePlayerUID = uid
@@ -37,8 +41,17 @@ class Room{
                     this.whitePlayerName = doc.data().username
                 }
             }
-        )
+        ).then(() => {
+            this.checkFull();
+        })
     }
+
+    checkFull(){
+        if(this.whitePlayerName && this.blackPlayerName){
+            this.roomFilled(this.roomCode, this.blackPlayerName, this.whitePlayerName)
+        }
+    }
+
     createIntervals(){
         this.roomTimer = setInterval(this.decrementTime(), 1000)
     }

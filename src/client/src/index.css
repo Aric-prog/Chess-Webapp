@@ -242,7 +242,13 @@ code {
 .history{
   width: 400px;
   height: 200px;
-  background-color: white;
+  padding: 10px;
+  text-align: left;
+  border-radius: 5px;
+  font-family: 'Courier New', Courier, monospace;
+  color: #fcd02f;
+  border: 2px solid #fcd02f;
+  background-color: #791a3d;
 }
 .modal{
   position: fixed;

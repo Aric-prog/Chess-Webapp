@@ -40,6 +40,7 @@ const Play = () => {
                 });
                 socket.current.on("connect_error", onConnectError);
                 socket.current.on("move", onReceiveMove);
+                socket.current.on("room filled", initNames);
                 socket.current.emit('join room', roomCode, (response) => {
                     setSide(response.side);
                     game.current.load_pgn(parseMoveList(response.pgn))
@@ -77,6 +78,10 @@ const Play = () => {
         game.current.move(move);
         setFen(getFen());
         checkGameOver();
+    }
+
+    const initNames = (name1, name2) => {
+        setStatus(name1 + " Vs. " + name2)
     }
 
     const onConnectError = (err) => {
@@ -133,7 +138,7 @@ const Play = () => {
                     </form>
                     <div>
                     <div className="room-status">Status : {roomStatus}</div>
-                    <MatchHistory></MatchHistory>
+                    <MatchHistory pgn ={game.current.pgn()}></MatchHistory>
                     </div>
                 </div>
             </div>
