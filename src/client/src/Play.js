@@ -9,16 +9,15 @@ const ENDPOINT = "http://127.0.0.1:5000";
 
 const Play = () => {
     const [fen, setFen] = useState("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
-    const [uid, setUid] = useState("");
     const [roomCode, setRoomCode] = useState("");
-    const [side, setSide] = useState("white");
+    // const [side, setSide] = useState("white");
     const [roomStatus, setStatus] = useState("not connected to room");
-    const [moveStack, setMoveStack] = useState([]);
-    const [history, setHistory] = useState([]);
     const [draggable, setDraggable] = useState(false);
     
+
     const { currentUser } = useAuth();
     const game = useRef(new Chess());
+    const side = useRef("white")
     const socket = useRef(null);
     
     useEffect(() => {
@@ -26,6 +25,10 @@ const Play = () => {
             // Force user to login or regsiter if nul
         }
     }, [])
+
+    const setSide = (s) => {
+        side.current = s;
+    }
 
     const initSocket = (roomCode) => {
         currentUser.getIdToken().then(
@@ -39,16 +42,14 @@ const Play = () => {
                 socket.current.on("move", onReceiveMove);
                 socket.current.emit('join room', roomCode, (response) => {
                     setSide(response.side);
-                    game.current.load_pgn(parseMoveList(response.pgn)) 
+                    game.current.load_pgn(parseMoveList(response.pgn))
                     setFen(game.current.fen());
                     setStatus("Connected to room " + roomCode)
                     
                     const isPlayerTurn = response.fen.split(" ")[1] === response.side.charAt(0)
-                    console.log(response.fen.split(" ")[1] === response.side.charAt(0))
                     if(isPlayerTurn){
                         setDraggable(true);
                     }
-                    // game.current.load(response.fen);
                 })
             }
         )
@@ -57,47 +58,30 @@ const Play = () => {
     const getFen = () => {
         return game.current.fen();
     }
-        
-    const undoMove = () => {
-        if(moveStack.length !== history.length && moveStack){
-            const move = game.current.undo()
-            if(move !== null){
-                moveStack.push(move)
-                setFen(getFen())
-            }
-        }
-    }
-    const redoMove = () => {
-        if(moveStack.length !== 0){
-            const move = moveStack.pop()
-            if(move !== null){
-                game.current.move(move)
-                setFen(getFen())
-            }
-        }
-    }
+    
 
     const onMove = (move, fen) => {
         // Function will be called when user drops their chesspiece
         if(socket.current !== null){
             socket.current.emit("move", move, fen, (response) => {
                 if(response.status === "move accepted"){
-                    setDraggable(false)
+                    setDraggable(false);
+                    checkGameOver();
                 }
             })
         }
     }
     
     const onReceiveMove = (move) => {
-        setDraggable(true)
+        setDraggable(true);
         game.current.move(move);
-        setMoveStack(game.current.history())
-        setFen(getFen())
+        setFen(getFen());
+        checkGameOver();
     }
 
     const onConnectError = (err) => {
         // Show error message on some random dom element
-        const errMessage = err.message
+        setStatus(err.message);
     } 
 
     const joinRoom = (roomCode) => {
@@ -120,10 +104,28 @@ const Play = () => {
         return output;
     }
 
+    const checkGameOver = () => {
+        console.log(side.current)
+        if(game.current.game_over()){
+            setDraggable(false);
+            if(game.current.in_stalemate()){
+                setStatus("Stalemate")
+            } else if(game.current.in_draw()){
+                setStatus("Game drawn")
+            } else if(game.current.fen().split(" ")[1] === side.current.charAt(0)){
+                setStatus("Checkmate, " + side.current + " loses")
+            } else{
+                setStatus("Checkmate, " + side.current + " wins")
+            }
+            // Post history result here
+            socket.current.emit("game over", game.current.fen(), game.current.pgn(), side.current)
+        }
+    }
+
     return (
         <div className="big-wrapper">
             <div className="game-container">
-                <Board game = {game} width = {600} fen = {fen} setFen={setFen} orientation = {side} onMove = {onMove} draggable = {draggable}/>
+                <Board game = {game} width = {600} fen = {fen} setFen={setFen} orientation = {side.current} onMove = {onMove} draggable = {draggable}/>
                 <div className="play-info">
                     <form onSubmit={handleSubmit} className="room-form">
                         <input type="text" className="room-input" placeholder="Insert room code here" value={roomCode} onInput={e => setRoomCode(e.target.value)}></input>
@@ -133,12 +135,6 @@ const Play = () => {
                     <div className="room-status">Status : {roomStatus}</div>
                     <MatchHistory></MatchHistory>
                     </div>
-                    {/* <div onClick={undoMove}>
-                        Left
-                    </div>
-                    <div onClick={redoMove}>
-                        Right
-                    </div> */}
                 </div>
             </div>
         </div>

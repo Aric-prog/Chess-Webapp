@@ -1,6 +1,7 @@
 const { Chess } = require('chess.js')
 const auth = require("./socket-auth")
 const { Room } = require("../room")
+const admin = require("./admin");
 const chess = new Chess()
 
 // Room Info, with key being id and room being the infos
@@ -23,15 +24,14 @@ function init_io(io) {
             socket.join(roomCode);
             
             console.log(roomInfo[roomCode].whitePlayerUID, roomInfo[roomCode].blackPlayerUID)
-            console.log("Player : " + uidFromMiddleware + " has joined room : " + roomCode);
             // Callback moment here with pgn
             callback({
                 side : roomInfo[roomCode].assignPlayer(uidFromMiddleware),
                 fen : roomInfo[roomCode].currentFen,
-                pgn : roomInfo[roomCode].history,
-                whitePlayerName : roomInfo[roomCode].whitePlayerName,
-                blackPlayerName : roomInfo[roomCode].blackPlayerName
+                pgn : roomInfo[roomCode].history
             })
+            console.log("White player : " + roomInfo[roomCode].whitePlayerName);
+            console.log("Black player : " + roomInfo[roomCode].blackPlayerName);
         })
         socket.on('move', (move, fen, callback) => {
             // If move is valid to current roomCode
@@ -48,6 +48,52 @@ function init_io(io) {
             }
             // Move denied, refresh browser
             callback({status:"move denied"})
+        })
+
+        socket.on('game over', (fen, pgn, side) => {
+            const currentRoom = roomInfo[playerRoom[uidFromMiddleware]];
+            const roomKey = playerRoom[uidFromMiddleware];
+            const db = admin.firestore()
+            if(currentRoom !== undefined){
+                delete playerRoom[uidFromMiddleware];
+                
+                var playerName = "";
+                var playerUID = "";
+                var enemyName = "";
+                if(side === "white"){
+                    playerName = currentRoom.whitePlayerName;
+                    playerUID  = currentRoom.whitePlayerUID;
+                    enemyName = currentRoom.blackPlayerName;
+                } else if(side === "black"){
+                    playerName = currentRoom.blackPlayerName;
+                    playerUID  = currentRoom.blackPlayerUID;
+                    enemyName = currentRoom.whitePlayerName;
+                }
+                const matchData = {
+                    enemy : enemyName,
+                    pgn : pgn,
+                    result : getWinner(fen, side),
+                    side : side
+                }
+                const ref = db.collection('history').doc(playerUID)
+                ref.get().then((doc) => {
+                    if(doc.exists){
+                        var hist = doc.data().history;
+                        hist.push(matchData)
+                        ref.set({
+                            history: hist
+                        })
+                    } else{
+                        ref.set({
+                            history : [matchData]
+                        })
+                    }
+                })
+                
+                if(!(currentRoom.whitePlayerUID in playerRoom) && !(currentRoom.blackPlayerUID in playerRoom)){
+                    delete roomInfo[roomKey]
+                }
+            }
         })
     });
 };
@@ -67,5 +113,18 @@ const validateMove = function(move, fen){
     } else{
         // Move illegal
         return false
+    }
+}
+
+const getWinner = (fen, side) => {
+    chess.load(fen)
+    if(chess.game_over()){
+        if(chess.in_draw() || chess.in_stalemate()){
+            return "D";
+        } else if(chess.fen().split(" ")[1] === side.charAt(0)){
+            return "L";
+        } else{
+            return "W";
+        }
     }
 }

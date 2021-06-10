@@ -17,17 +17,6 @@ router.get('/user/history', function(req,res){
         }
     )
 })
-router.post('/user/history', function(req,res){
-    const enemyName = "Guest"
-    const enemyUid = req.headers.enemyUid
-    db.collection("users").doc(enemyUid).get().then(
-        doc => {
-            if(doc.exists){
-                enemyName = doc.data().username
-            }
-        }
-    )
-})
 
 router.get('/token', function(req,res){
     const uid = req.uid

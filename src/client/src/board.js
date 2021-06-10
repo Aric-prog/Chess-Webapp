@@ -3,9 +3,6 @@ import React, { useEffect, useState } from "react";
 import Chessboard from "chessboardjsx";
 
 const Board = (props) => {
-	const [dropSquareStyle, setDropSquareStyle] = useState({});
-	const [squareStyles, setSquareStyles] = useState({});
-	const [square, setSquare] = useState("");
 	const [width, setWidth] = useState(props.width);
 
 	let game = props.game;
