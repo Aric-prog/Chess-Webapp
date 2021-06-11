@@ -42,7 +42,7 @@ const SignUpModal = ({ showSignUp, setShowSignUp, showLogin, setShowLogin }) => 
             openSignUp()
 
         } catch {
-            return setError('Failed to create an account')
+            setError('Failed to create an account')
         }
         setLoading(false)
 

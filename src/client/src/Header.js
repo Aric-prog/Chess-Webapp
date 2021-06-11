@@ -17,7 +17,7 @@ const Header = () => {
     const [loading, setLoading] = useState(false)
     const [username, setUsername] = useState('')
 
-    async function handleSubmit(e) {
+    async function handleSignOut(e) {
         e.preventDefault()
         try {
             setError('')
@@ -61,7 +61,7 @@ const Header = () => {
                         {(currentUser==null) && <Link className="signin" onClick={openLogin}> Login</Link>}
                         {(currentUser==null) && <Link className="signup" onClick={openSignUp}> Sign up</Link>}
                         {(currentUser!=null) && <Link to="/history" className="signin"> { username } </Link>}
-                        {(currentUser!=null) && <Link to="/" className="signup" onClick={handleSubmit}> 
+                        {(currentUser!=null) && <Link to="/" className="signup" onClick={handleSignOut}> 
                             Logout</Link>}
                     </div>
                 </div>

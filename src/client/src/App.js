@@ -7,6 +7,7 @@ const { default: Learn } = require("./Learn");
 const { default: Play } = require("./Play")
 const { default: About } = require("./About");
 const { default: History } = require("./History");
+const { default: Footer} = require("./Footer");
 
 function App() {
 
@@ -36,6 +37,7 @@ function App() {
             {/* <SignUpModal></SignUpModal> */}
             {/* <LoginModal></LoginModal> */}
           </div>
+          <Footer></Footer>
         </div>
       </Router>
     </AuthProvider>
