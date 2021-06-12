@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
 import { useAuth } from './firebase/AuthContext';
+import { db } from './firebase/firebase-config';
+import { Link } from 'react-router-dom'
 const History = () => {
     const { currentUser } = useAuth()
     const [historyData, setHistoryData] = useState([])
+    const [username, setUsername] = useState('')
+    const [wins, setWins] = useState(0)
 
     // Gets the history data for someone
     useEffect(() => {
@@ -28,12 +32,57 @@ const History = () => {
         }
     }, [])
 
+    useEffect(() => {
+        if (currentUser !== null) {
+            db.collection('users').doc(currentUser.uid).get().then(doc => {
+                return setUsername(doc.data().username)
+            })
+        }
+    }, [])
+
+
+    // const result = historyData.map(data => {
+    //     if (data.result === "W") {
+    //         setWins(wins + 1)
+    //     }
+    //     else {
+    //         setWins(wins + 0)
+    //     }
+    //     return wins
+    // })
+
+
+    // function getWins(){
+    //     var i;
+    //     for (i = 0; i < historyData.length; i++){
+    //         const wins = historyData[i].result 
+    //         if(wins === "W"){
+    //             setWins(wins + 1)
+    //         }
+    //         else{
+    //             setWins(wins + 0)
+    //         }
+    //         console.log(wins)
+    //     }
+    //     return wins
+    // }
+
     return (
         <div className="big-wrapper">
             <div className="container">
                 <div className="history-wrapper">
+
                     <div className="profile-wrapper">
-                        {/* Profile Box here */}
+                        <h1>My Profile</h1>
+                        <div className="stats-wrapper">
+                            <div><i class="fas fa-chess-board"></i></div>
+                            <div>
+                                <h3>Welcome {username}!</h3>
+                                <p className="games-played">Games played: {historyData.length}</p>
+                                <p className="win-rate">Win rate:</p>
+                            </div>
+                        </div>
+
                     </div>
                     <h1>Match History</h1>
                     <table className="history-table">
@@ -44,16 +93,16 @@ const History = () => {
                                 <th>Side</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            {historyData.map(row => <tr>
+                        <tbody> 
+                            {/* {historyData.length && historyData.map(row => <tr>
                                 {
-                                    <> 
-                                    <td>{row.enemy}</td>
-                                    <td>{row.result}</td>
-                                    <td>{row.side}</td>
+                                    <>
+                                        <td>{row.enemy}</td>
+                                        <td>{row.result}</td>
+                                        <td>{row.side}</td>
                                     </>
                                 }
-                                </tr>)}
+                            </tr>)} */}
                         </tbody>
                     </table>
                 </div>

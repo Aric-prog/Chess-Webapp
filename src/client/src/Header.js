@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import LoginModal from './LoginModal';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import SignUpModal from './SignUpModal';
 import { useAuth } from './firebase/AuthContext';
-import { useSpring, animated } from 'react-spring';
 import { db } from './firebase/firebase-config';
 import ForgotPasswordModal from './ForgotPasswordModal';
 
@@ -16,6 +15,7 @@ const Header = () => {
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
     const [username, setUsername] = useState('')
+    const history = useHistory()
 
     async function handleSignOut(e) {
         e.preventDefault()
@@ -23,6 +23,7 @@ const Header = () => {
             setError('')
             setLoading(true)
             await signout()
+            history.push('/')
         } catch {
             return setError('Failed to signout')
         }
@@ -69,7 +70,6 @@ const Header = () => {
             <LoginModal showLogin={showLogin} setShowLogin={setShowLogin} showSignUp={showSignUp} setShowSignUp={setShowSignUp} showResetPass={showResetPass} setShowResetPass={setShowResetPass}></LoginModal>
             <SignUpModal showSignUp={showSignUp} setShowSignUp={setShowSignUp} showLogin={showLogin} setShowLogin={setShowLogin}></SignUpModal>
             <ForgotPasswordModal showResetPass={showResetPass} setShowResetPass={setShowResetPass} showLogin={showLogin} setShowLogin={setShowLogin} showSignUp={showSignUp} setShowSignUp={setShowSignUp}></ForgotPasswordModal>
-
 
         </nav>
     );

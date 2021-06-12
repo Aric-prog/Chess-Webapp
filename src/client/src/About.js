@@ -1,7 +1,8 @@
 import { useState } from "react";
 import Members from './Members';
 import bryan from './images/bepe.jpg'
-import aric from './images/bepe.jpg'
+import aric from './images/aric.jpg'
+import jocelyn from './images/joce.jpg'
 
 const About = () => {
 

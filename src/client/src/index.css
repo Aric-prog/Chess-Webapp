@@ -534,7 +534,46 @@ code {
 }
 
 .profile-wrapper{
-  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #791a3d;
+  padding: 35px 35px;
+  border-radius: 10px;
+  /* width: 35%; */
+  margin-bottom: 25px;
+}
+
+.stats-wrapper{
+  display: flex;
+  flex-direction: row;
+  text-align: left;
+}
+
+.profile-wrapper h1{
+  color: #fcd02f !important;
+  margin-top: 0px;
+}
+
+.profile-wrapper i{
+  font-size: 128px;
+  margin-right: 20px;
+}
+
+.profile-wrapper h3{
+  margin-top: 0px;
+  font-size: 24px;
+  color: #ecea66;
+}
+
+.games-played{
+  font-size: 20px !important;
+}
+
+.win-rate{
+  margin-bottom: 0px;
+  font-size: 20px !important; 
 }
 
 .history-wrapper{
