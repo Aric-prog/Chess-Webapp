@@ -19,7 +19,7 @@ const About = () => {
         },
         {
             name: 'Jocelyn Thiojaya',
-            image: bryan,
+            image: jocelyn,
             desc: `I am a gamer trying my best to be a computer science student. Animals are cool.`
         }
     ]);
