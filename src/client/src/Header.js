@@ -44,7 +44,8 @@ const Header = () => {
                 return setUsername(doc.data().username)
             })
         }
-    }) // later give a second parameter, if no parameter this thing goes on everytime re renders
+        console.log(username)
+    })
     
     return (
         <nav className="navbar">

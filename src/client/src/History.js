@@ -6,7 +6,10 @@ const History = () => {
     const { currentUser } = useAuth()
     const [historyData, setHistoryData] = useState([])
     const [username, setUsername] = useState('')
-    const [wins, setWins] = useState(0)
+    // const [wins, setWins] = useState(0)
+    const historyDataIsEmpty = historyData === "No data"
+    const historyDataLength = historyDataIsEmpty ? 0 : historyData.length
+    var wincount = 0;
 
     // Gets the history data for someone
     useEffect(() => {
@@ -24,7 +27,8 @@ const History = () => {
                         // List from firebase is here, use it as you will
                         data => {
                             console.log(data)
-                            console.log(data.history)
+                            console.log(data.history)  // data is an object that has the history property which
+                            // contains array of objects
                             setHistoryData(data.history) //data.history array of objects
                         }
                     )
@@ -40,32 +44,20 @@ const History = () => {
         }
     }, [])
 
+    function countWins(){
+        historyData.map(data => {
+            if (data.result === "W") {
+                wincount += 1
+            }
+            else {
+                wincount += 0
+            }
+        })
+    return wincount
+    }
 
-    // const result = historyData.map(data => {
-    //     if (data.result === "W") {
-    //         setWins(wins + 1)
-    //     }
-    //     else {
-    //         setWins(wins + 0)
-    //     }
-    //     return wins
-    // })
-
-
-    // function getWins(){
-    //     var i;
-    //     for (i = 0; i < historyData.length; i++){
-    //         const wins = historyData[i].result 
-    //         if(wins === "W"){
-    //             setWins(wins + 1)
-    //         }
-    //         else{
-    //             setWins(wins + 0)
-    //         }
-    //         console.log(wins)
-    //     }
-    //     return wins
-    // }
+    const result = historyDataIsEmpty ? 0 : countWins()
+    const winRate = historyDataIsEmpty ? 0 : (result / historyDataLength) * 100
 
     return (
         <div className="big-wrapper">
@@ -78,8 +70,8 @@ const History = () => {
                             <div><i class="fas fa-chess-board"></i></div>
                             <div>
                                 <h3>Welcome {username}!</h3>
-                                <p className="games-played">Games played: {historyData.length}</p>
-                                <p className="win-rate">Win rate:</p>
+                                <p className="games-played">Games played: {historyDataLength}</p>
+                                <p className="win-rate">Win rate: {winRate}%</p>
                             </div>
                         </div>
 
@@ -93,8 +85,8 @@ const History = () => {
                                 <th>Side</th>
                             </tr>
                         </thead>
-                        <tbody> 
-                            {/* {historyData.length && historyData.map(row => <tr>
+                        <tbody>
+                            {!historyDataIsEmpty ? historyData.map(row => <tr>
                                 {
                                     <>
                                         <td>{row.enemy}</td>
@@ -102,7 +94,7 @@ const History = () => {
                                         <td>{row.side}</td>
                                     </>
                                 }
-                            </tr>)} */}
+                            </tr>) : null}
                         </tbody>
                     </table>
                 </div>
