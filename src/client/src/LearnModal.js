@@ -1,8 +1,9 @@
 import { useSpring, animated } from 'react-spring';
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 
-const LearnModal = (showModal, setShowModal) => {
+const LearnModal = (props) => {
 
+    const [showModal, setShowModal] = useState(false);
     const modalRef = useRef()
     const animation = useSpring({
         config: {
@@ -13,10 +14,13 @@ const LearnModal = (showModal, setShowModal) => {
     })
 
     const openModal = () => {
-        setShowModal(prev => !prev);
+        setShowModal(true);
     };
+    const closeModal = () => {
+        setShowModal(false);
+    }
 
-    const closeModal = e => {
+    const closeModalExit = e => {
         if (modalRef.current === e.target) {
             setShowModal(false);
         }
@@ -35,18 +39,22 @@ const LearnModal = (showModal, setShowModal) => {
     }, [onEscapePressed]);
 
     let modal;
-    // showModal ? modal = (
 
-    // ): modal = null
     if (showModal) {
         modal = (
-            <div className="modal" ref={modalRef} onClick={closeModal}>
+            <div className="modal-learn" ref={modalRef} onClick={closeModalExit}>
                 <animated.div style={animation}>
-                    <div className="modal-inner">
-                        <i class="far fa-times-circle" onClick={openModal}></i>
-                        <div className="modal-header">
-                            <h1>Login</h1>
+                    <div className="modal-inner-learn">
+                        <i id="close" class="far fa-times-circle" onClick={closeModal}></i>
+                        <div className="modal-header-learn">
+                            <i className={props.icon}></i>
+                            <h1>{props.name}</h1>
                         </div>
+                        <div className="learnModal-content">
+                            <img src={props.moveImage}></img>
+                            <p>{props.description}</p>
+                        </div>
+                        
                     </div>
                 </animated.div>
             </div>
@@ -55,19 +63,17 @@ const LearnModal = (showModal, setShowModal) => {
 
 
     return (
-        <div>
-            {showModal ?
-                <div className="modal" ref={modalRef} onClick={closeModal}>
-                    <animated.div style={animation}>
-                        <div className="modal-inner">
-                            <i class="far fa-times-circle" onClick={openModal}></i>
-                            <div className="modal-header">
-                                <h1>Login</h1>
-                            </div>
-                        </div>
-                    </animated.div>
-                </div> : null}
+        <div className="piece" >
+            <div onClick={openModal}>
+                <i className={props.icon}></i>
+                <h1>{props.name}</h1>
+                <p>{props.click}</p>
+            </div>
+            {modal}
         </div>
+
+
+
     );
 }
 

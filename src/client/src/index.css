@@ -619,3 +619,62 @@ code {
   padding: 12px 15px;
 }
 
+.modal-learn{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+
+.modal-inner-learn{
+  position: relative;
+  /* top: 17%;
+  right: 0;
+  left: 0; */
+  width: 40%;
+  padding: 20px 30px;
+  margin: auto;
+  background-color: #791a3d;
+  color: #fcd02f;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.2);
+}
+
+#close{
+  position: absolute;
+  right: 20px;
+  font-size: 25px;
+}
+
+.modal-inner-learn i {
+}
+
+
+.modal-header-learn{
+  text-align: center;
+}
+
+.learnModal-content{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  /* flex-grow: 1;
+  flex-basis: 0; */
+}
+
+.learnModal-content img{
+  width: 125%;
+  margin-right: 20px;
+}
+
+.learnModal-content p{
+  font-size: 18px;
+  margin-top: 0px;
+}

@@ -9,78 +9,51 @@ import LearnModal from './LearnModal';
 
 const LearnList = () => {
 
+
     const [pieces, setPieces] = useState([
         {
             name: 'King',
             icon: 'fas fa-chess-king',
-            image2: '',
-            description: 'Click me to learn more',
-        },
-        {
-            name: 'Queen',
-            icon: 'fas fa-chess-queen',
-            image2: '',
-            description: 'Click me to learn more',
-        },
-        {
-            name: 'Rook',
-            icon: 'fas fa-chess-rook',
-            image2: '',
-            description: 'Click me to learn more',
-        },
-        {
-            name: 'Knight',
-            icon: 'fas fa-chess-knight',
-            image2: '',
-            description: 'Click me to learn more',
-        },
-        {
-            name: 'Bishop',
-            icon: 'fas fa-chess-bishop',
-            image2: '',
-            description: 'Click me to learn more',
-        },
-        {
-            name: 'Pawn',
-            icon: 'fas fa-chess-pawn',
-            image2: '',
-            description: 'Click me to learn more',
-        }
-    ]);
-
-    const pieceDescriptionList = [
-        {
+            click: 'Click me to learn more',
             description: 'The king is not the most powerful chess piece, but it is the most important one! If a king is put in checkmate, then the game is over! ',
             moveImage: kingMove
         },
         {
-            description: 'The king is not the most powerful chess piece, but it is the most important one! If a king is put in checkmate, then the game is over! ',
+            name: 'Queen',
+            icon: 'fas fa-chess-queen',
+            click: 'Click me to learn more',
+            description: 'The queen is the most powerful of all of the chess pieces and is often used in early and brutal attacks. It is important to learn how to make your opponent fear your dangerous queen!',
             moveImage: queenMove
         },
         {
-            description: 'The king is not the most powerful chess piece, but it is the most important one! If a king is put in checkmate, then the game is over! ',
+            name: 'Rook',
+            icon: 'fas fa-chess-rook',
+            click: 'Click me to learn more',
+            description: 'The rook is the second most powerful piece in chess! It is a long-range piece and is notorious for delivering back-rank checkmates!',
             moveImage: rookMove
         },
         {
-            description: 'The king is not the most powerful chess piece, but it is the most important one! If a king is put in checkmate, then the game is over! ',
-            moveImage: bishopMove
-        },
-        {
-            description: 'The king is not the most powerful chess piece, but it is the most important one! If a king is put in checkmate, then the game is over! ',
+            name: 'Knight',
+            icon: 'fas fa-chess-knight',
+            click: 'Click me to learn more',
+            description: 'The knight is the trickiest piece in chess! It moves very differently than other pieces and can deliver the dreaded fork or even a smothered mate!',
             moveImage: knightMove
         },
         {
-            description: 'The king is not the most powerful chess piece, but it is the most important one! If a king is put in checkmate, then the game is over! ',
+            name: 'Bishop',
+            icon: 'fas fa-chess-bishop',
+            click: 'Click me to learn more',
+            description: 'The bishop is an interesting piece because it can move as far as it wants but only on diagonals. It is a long-range piece and can be very dangerous! ',
+            moveImage: bishopMove
+        },
+        {
+            name: 'Pawn',
+            icon: 'fas fa-chess-pawn',
+            click: 'Click me to learn more',
+            description: 'The pawn is the least powerful chess piece, but it can be promoted into any other chess piece (except for a king). As Philidor once said, "Pawns are the soul of chess!"',
             moveImage: pawnMove
         }
-    ]
-
-    const [showModal, setShowModal] = useState(false);
-
-    const openModal = () => {
-        setShowModal(prev => !prev);
-    };
-
+    ]);
 
     return (
         <div className="big-wrapper">
@@ -88,17 +61,20 @@ const LearnList = () => {
                 <h1 class="rules-title">The Rules Of Chess</h1>
                 <div className="piece-container">
                     {pieces.map((piece) => (
-                        <div className="piece">
-                            <i className={piece.icon}></i>
-                            <h1>{piece.name}</h1>
-                            <p>{piece.description}</p>
-                        </div>
-                    ))}
+                    <LearnModal 
+                        name={piece.name}
+                        icon={piece.icon}
+                        click={piece.click}
+                        description={piece.description}
+                        moveImage={piece.moveImage}
+                    ></LearnModal>
+                ))}
                 </div>
+                
             </div>
-            {/* <LearnModal showModal={showModal} setShowModal={setShowModal}></LearnModal> */}
+
         </div>
-        
+
     );
 }
 
