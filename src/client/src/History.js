@@ -6,7 +6,6 @@ const History = () => {
     const { currentUser } = useAuth()
     const [historyData, setHistoryData] = useState([])
     const [username, setUsername] = useState('')
-    // const [wins, setWins] = useState(0)
     const historyDataIsEmpty = historyData === "No data"
     const historyDataLength = historyDataIsEmpty ? 0 : historyData.length
     var wincount = 0;
