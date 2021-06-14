@@ -54,7 +54,7 @@ const Header = () => {
                     <ul className="header-left-list">
                         <li><Link to="/" className="logo"> <i class="fas fa-chess-board"></i> Chess</Link></li>
                         <li><Link to="/learn" className="learn"> Learn</Link></li>
-                        <li><Link to="/play" className="play"> Play</Link></li>
+                        <li><Link to="/playoption" className="play"> Play</Link></li>
                         <li><Link to="/about" className="about-us"> About Us</Link></li>
                     </ul>
                 </div>
