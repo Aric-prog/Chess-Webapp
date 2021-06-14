@@ -64,9 +64,9 @@ const Play = () => {
     const onMove = (move, fen) => {
         // Function will be called when user drops their chesspiece
         if(socket.current !== null){
+            setDraggable(false);
             socket.current.emit("move", move, fen, (response) => {
                 if(response.status === "move accepted"){
-                    setDraggable(false);
                     checkGameOver();
                 }
             })
