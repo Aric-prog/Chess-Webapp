@@ -778,3 +778,39 @@ code {
   font-size: 32px;
   margin: 20px 0px; 
 }
+
+.frameworks-container{
+  margin-top: 100px;
+  display: flex;
+  flex-direction: row;
+  background-color: #791a3d;
+  padding: 75px 75px;
+  border-radius: 20px;
+  box-shadow: 0 0 10px 2px #000000;
+}
+
+.website-image{
+  width: 60%;
+  margin-right: 50px;
+}
+.framework-container{
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.framework{
+  display: flex;
+  flex-direction: row;
+  margin-right: 30px;
+  width: 45%;
+}
+.framework img{
+  width: 100px;
+  margin-right: 20px;
+}
+.framework h3{
+  line-height: 60px;
+  font-size: 24px;
+  letter-spacing: 2px;
+  color: #fcd02f;
+}
