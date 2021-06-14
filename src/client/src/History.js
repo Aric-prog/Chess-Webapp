@@ -9,7 +9,7 @@ const History = () => {
         if (currentUser !== null) {
             const token = currentUser.getIdToken().then(token =>
                 // To be replace with api.chess-webapp.com in deployment
-                fetch('http://localhost:5000/user/history', {
+                fetch('https://api.chess-webapp.com/user/history', {
                     method: 'GET',
                     headers: {
                         authorization: 'Bearer ' + token

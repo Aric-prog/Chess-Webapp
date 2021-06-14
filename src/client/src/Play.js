@@ -5,7 +5,7 @@ import * as Chess from "chess.js";
 import { useAuth } from './firebase/AuthContext';
 
 import socketIOClient from "socket.io-client";
-const ENDPOINT = "http://127.0.0.1:5000";
+const ENDPOINT = "https://api.chess-webapp.com";
 
 const Play = () => {
     const [fen, setFen] = useState("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");

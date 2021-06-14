@@ -12,7 +12,6 @@ const LoginModal = ({ showLogin, setShowLogin, showSignUp , setShowSignUp, showR
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
 
-    // const [showSignUp, setShowSignUp] = useState(false);
     const modalRef = useRef()
     const animation = useSpring({
         config: {
