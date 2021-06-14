@@ -56,7 +56,7 @@ const History = () => {
     }
 
     const result = historyDataIsEmpty ? 0 : countWins()
-    const winRate = historyDataIsEmpty ? 0 : (result / historyDataLength) * 100
+    const winRate = historyDataIsEmpty ? 0 : ((result / historyDataLength) * 100).toFixed(2)
 
     return (
         <div className="big-wrapper">
