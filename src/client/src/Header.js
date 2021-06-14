@@ -5,12 +5,14 @@ import SignUpModal from './SignUpModal';
 import { useAuth } from './firebase/AuthContext';
 import { db } from './firebase/firebase-config';
 import ForgotPasswordModal from './ForgotPasswordModal';
+import PlayRemindModal from './PlayRemindModal';
 
 const Header = () => {
 
     const [showLogin, setShowLogin] = useState(false);
     const [showSignUp, setShowSignUp] = useState(false);
     const [showResetPass, setShowResetPass] = useState(false);
+    const [showRemind, setShowRemind] = useState(false);
     const { signout, currentUser } = useAuth()
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
@@ -37,6 +39,9 @@ const Header = () => {
     const openSignUp = () => {
         setShowSignUp(prev => !prev);
     };
+    const openRemind = () => {
+        setShowRemind(prev => !prev);
+    }
 
     useEffect(() => {
         if(currentUser !== null){
@@ -47,6 +52,8 @@ const Header = () => {
         console.log(username)
     })
     
+    // const checkPlay = currentUser !== null ?
+
     return (
         <nav className="navbar">
             <div className="container">
@@ -54,12 +61,13 @@ const Header = () => {
                     <ul className="header-left-list">
                         <li><Link to="/" className="logo"> <i class="fas fa-chess-board"></i> Chess</Link></li>
                         <li><Link to="/learn" className="learn"> Learn</Link></li>
-                        <li><Link to="/playoption" className="play"> Play</Link></li>
+                        {(currentUser==null) && <li><a href="#" className="play" onClick={openRemind}>Play</a></li>}
+                        {(currentUser!=null) && <li><Link to="/playoption" className="play"> Play</Link></li>}
                         <li><Link to="/about" className="about-us"> About Us</Link></li>
                     </ul>
                 </div>
                 <div className="header-right">
-                    <div className="sign-container">        
+                    <div className="sign-container">
                         {(currentUser==null) && <Link className="signin" onClick={openLogin}> Login</Link>}
                         {(currentUser==null) && <Link className="signup" onClick={openSignUp}> Sign up</Link>}
                         {(currentUser!=null) && <Link to="/history" className="signin"> { username } </Link>}
@@ -70,7 +78,8 @@ const Header = () => {
             </div>
             <LoginModal showLogin={showLogin} setShowLogin={setShowLogin} showSignUp={showSignUp} setShowSignUp={setShowSignUp} showResetPass={showResetPass} setShowResetPass={setShowResetPass}></LoginModal>
             <SignUpModal showSignUp={showSignUp} setShowSignUp={setShowSignUp} showLogin={showLogin} setShowLogin={setShowLogin}></SignUpModal>
-            <ForgotPasswordModal showResetPass={showResetPass} setShowResetPass={setShowResetPass} showLogin={showLogin} setShowLogin={setShowLogin} showSignUp={showSignUp} setShowSignUp={setShowSignUp}></ForgotPasswordModal>
+            <ForgotPasswordModal showResetPass={showResetPass} setShowResetPass={setShowResetPass} showLogin={showLogin} setShowLogin={setShowLogin}></ForgotPasswordModal>
+            <PlayRemindModal showRemind={showRemind} setShowRemind={setShowRemind} showLogin={showLogin} setShowLogin={setShowLogin}></PlayRemindModal>
 
         </nav>
     );

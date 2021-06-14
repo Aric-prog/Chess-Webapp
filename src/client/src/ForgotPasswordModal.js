@@ -2,7 +2,6 @@ import '../node_modules/font-awesome/css/font-awesome.min.css';
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { useSpring, animated } from 'react-spring';
 import { useAuth } from './firebase/AuthContext';
-import { Link } from 'react-router-dom';
 
 const ForgotPasswordModal = ({ showLogin, setShowLogin, showResetPass, setShowResetPass }) => {
 
