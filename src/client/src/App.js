@@ -8,6 +8,8 @@ const { default: Play } = require("./Play")
 const { default: About } = require("./About");
 const { default: History } = require("./History");
 const { default: Footer} = require("./Footer");
+const { default: LearnList} = require("./LearnList")
+const { default: PlayOption} = require("./PlayOption")
 
 function App() {
 
@@ -22,7 +24,10 @@ function App() {
                 <Home></Home>
               </Route>
               <Route exact path="/learn">
-                <Learn></Learn>
+                <LearnList></LearnList>
+              </Route>
+              <Route exact path="/playoption">
+                <PlayOption></PlayOption>
               </Route>
               <Route exact path="/play">
                 <Play></Play>

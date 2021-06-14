@@ -2,7 +2,7 @@ import '../node_modules/font-awesome/css/font-awesome.min.css';
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { useSpring, animated } from 'react-spring';
 import { useAuth } from './firebase/AuthContext';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 const LoginModal = ({ showLogin, setShowLogin, showSignUp , setShowSignUp, showResetPass, setShowResetPass }) => {
 
@@ -11,6 +11,7 @@ const LoginModal = ({ showLogin, setShowLogin, showSignUp , setShowSignUp, showR
     const { signin } = useAuth()
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
+    const history = useHistory()
 
     const modalRef = useRef()
     const animation = useSpring({
@@ -64,6 +65,7 @@ const LoginModal = ({ showLogin, setShowLogin, showSignUp , setShowSignUp, showR
             alert('Logged in successfully')
             setError('')
             openLogin();
+            history.push('/')
         } catch {
             setError('Invalid email or password')
         }
