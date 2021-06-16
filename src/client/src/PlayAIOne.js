@@ -13,7 +13,7 @@ const PlayAIOne = () => {
     const onMove = () => {
         setDraggable(false)
         if(!checkGameOver()){
-            fetch('http://localhost:5000/naive', {
+            fetch('https://ai.chess-webapp.com/naive', {
                 method: 'POST',
                 headers: {
                     'Content-Type' : 'application/json'

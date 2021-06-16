@@ -13,7 +13,7 @@ const PlayAITwo = () => {
     const onMove = () => {
 		checkGameOver()
         setDraggable(false)
-        fetch('http://localhost:5000/engine', {
+        fetch('https://ai.chess-webapp.com/engine', {
             method: 'POST',
             headers: {
                 'Content-Type' : 'application/json'
