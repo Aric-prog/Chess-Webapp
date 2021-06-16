@@ -11,27 +11,26 @@ const PlayAITwo = () => {
     const game = useRef(new Chess())
 	
     const onMove = () => {
-		checkGameOver()
-        setDraggable(false)
-        fetch('https://ai.chess-webapp.com/engine', {
-            method: 'POST',
-			mode : 'cors',
-            headers: {
-                'Content-Type' : 'application/json'
-            },
-            body : JSON.stringify({"fen" : game.current.fen()})
-        })
-        .then(res => res.json())
-        .then(data => {
-            console.log(data.move)
-            game.current.move(data.move, {sloppy : true})
-            setFen(game.current.fen())
-			checkGameOver()
-            setDraggable(!checkGameOver())
-        }).catch(() => {
-            setStatus("Failed to connect to server")
-        })
-
+		setDraggable(false)
+		if(!checkGameOver()){
+            fetch('https://ai.chess-webapp.com/engine', {
+                method: 'POST',
+                mode : 'cors',
+                headers: {
+                    'Content-Type' : 'application/json'
+                },
+                body : JSON.stringify({"fen" : game.current.fen()})
+            })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data.move)
+                game.current.move(data.move, {sloppy : true})
+                setFen(game.current.fen())
+                setDraggable(!checkGameOver())
+            }).catch(() => {
+                setStatus("Failed to connect to server")
+            })
+        }
     }
 
 	const checkGameOver = () => {
