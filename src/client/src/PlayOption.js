@@ -18,14 +18,14 @@ const PlayOption = () => {
                                 <p>PLAYER</p>
                             </div>
                         </Link>
-                        <Link to="/play" className="option">
+                        <Link to="/playnoobai" className="option">
                             <div>
                                 <p>PLAYER</p>
                                 <p>VS</p>
                                 <p>NOOB AI</p>
                             </div>
                         </Link>
-                        <Link to="/play" className="option">
+                        <Link to="/playproai" className="option">
                             <div>
                                 <p>PLAYER</p>
                                 <p>VS</p>

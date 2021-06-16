@@ -10,6 +10,8 @@ const { default: History } = require("./History");
 const { default: Footer} = require("./Footer");
 const { default: LearnList} = require("./LearnList")
 const { default: PlayOption} = require("./PlayOption")
+const { default: PlayAIOne} = require("./PlayAIOne")
+const { default: PlayAITwo} = require("./PlayAITwo")
 
 function App() {
 
@@ -31,6 +33,12 @@ function App() {
               </Route>
               <Route exact path="/play">
                 <Play></Play>
+              </Route>
+              <Route exact path="/playnoobai">
+                <PlayAIOne></PlayAIOne>
+              </Route>
+              <Route exact path="/playproai">
+                <PlayAITwo></PlayAITwo>
               </Route>
               <Route exact path="/about">
                 <About></About>
