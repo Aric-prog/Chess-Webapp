@@ -46,6 +46,7 @@ const PlayAIOne = () => {
             }
             return true
         }
+        return false
     }
 
     return (

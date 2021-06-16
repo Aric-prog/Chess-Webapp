@@ -26,7 +26,7 @@ const PlayAITwo = () => {
             game.current.move(data.move, {sloppy : true})
             setFen(game.current.fen())
 			checkGameOver()
-            setDraggable(true)
+            setDraggable(!checkGameOver())
         }).catch(() => {
             setStatus("Failed to connect to server")
         })
@@ -45,7 +45,9 @@ const PlayAITwo = () => {
             } else{
                 setStatus("Checkmate, " + side.current + " wins")
             }
+			return true
         }
+		return false
 	}
 
     return (
