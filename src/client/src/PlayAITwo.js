@@ -15,6 +15,7 @@ const PlayAITwo = () => {
         setDraggable(false)
         fetch('https://ai.chess-webapp.com/engine', {
             method: 'POST',
+			mode : 'cors',
             headers: {
                 'Content-Type' : 'application/json'
             },
