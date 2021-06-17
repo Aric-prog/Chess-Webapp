@@ -15,7 +15,6 @@ const PlayAIOne = () => {
         if(!checkGameOver()){
             fetch('https://ai.chess-webapp.com/naive', {
                 method: 'POST',
-                mode : 'cors',
                 headers: {
                     'Content-Type' : 'application/json'
                 },
