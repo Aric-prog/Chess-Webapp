@@ -1,10 +1,16 @@
+// imports
 import { useSpring, animated } from 'react-spring';
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 
+// the Learn Modal
+// LearnModal component declared functionally
 const LearnModal = (props) => {
 
+    // set constants
     const [showModal, setShowModal] = useState(false);
     const modalRef = useRef()
+
+    // animation for modal
     const animation = useSpring({
         config: {
             duration: 400
@@ -13,9 +19,12 @@ const LearnModal = (props) => {
         transform: showModal ? 'translateY(35%)' : 'translateY(-100%)'
     })
 
+    // to open modal
     const openModal = () => {
         setShowModal(true);
     };
+
+    // to close modal 
     const closeModal = () => {
         setShowModal(false);
     }
@@ -26,6 +35,7 @@ const LearnModal = (props) => {
         }
     }
 
+    // if press escape key
     const onEscapePressed = useCallback(
         e => {
             if (e.key === 'Escape' && showModal) {
@@ -33,13 +43,16 @@ const LearnModal = (props) => {
             }
         }, [setShowModal, showModal]);
 
+    // do after render
     useEffect(() => {
+        // detect esc key press
         document.addEventListener('keydown', onEscapePressed);
         return () => document.removeEventListener('keydown', onEscapePressed)
     }, [onEscapePressed]);
 
     let modal;
 
+    // display image, descriptions of pieces in the modal
     if (showModal) {
         modal = (
             <div className="modal-learn" ref={modalRef} onClick={closeModalExit}>
@@ -61,7 +74,7 @@ const LearnModal = (props) => {
         )
     }
 
-
+    // the piece button
     return (
         <div className="piece" >
             <div onClick={openModal}>
@@ -77,4 +90,5 @@ const LearnModal = (props) => {
     );
 }
 
+// export LearnModal
 export default LearnModal;

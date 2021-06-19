@@ -1,3 +1,4 @@
+// imports
 import { useState } from 'react';
 import pawnMove from './images/pawnmove.png'
 import kingMove from './images/kingmove.png'
@@ -7,9 +8,11 @@ import bishopMove from './images/bishopmove.png'
 import rookMove from './images/rookmove.png'
 import LearnModal from './LearnModal';
 
+// the Learn page
+// LearnList component declared functionally
 const LearnList = () => {
 
-
+    // set constants for piece information
     const [pieces, setPieces] = useState([
         {
             name: 'King',
@@ -56,6 +59,7 @@ const LearnList = () => {
     ]);
 
     return (
+        // html code
         <div className="big-wrapper">
             <div className="container">
                 <h1 class="rules-title">The Rules Of Chess</h1>
@@ -78,4 +82,5 @@ const LearnList = () => {
     );
 }
 
+// export LearnList
 export default LearnList;

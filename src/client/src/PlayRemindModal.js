@@ -1,11 +1,15 @@
+// imports
 import '../node_modules/font-awesome/css/font-awesome.min.css';
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { useSpring, animated } from 'react-spring';
 
-
+// the Remind Modal
+// PlayRemindModal component declared functionally
 const PlayRemindModal = ({ showLogin, setShowLogin, showRemind, setShowRemind }) => {
-
+    // set constants
     const modalRef = useRef()
+
+    // set animation
     const animation = useSpring({
         config: {
             duration: 400
@@ -14,20 +18,24 @@ const PlayRemindModal = ({ showLogin, setShowLogin, showRemind, setShowRemind })
         transform: showRemind ? 'translateY(57%)' : 'translateY(-100%)'
     })
 
+    // to open login modal
     const openLogin = () => {
         setShowLogin(prev => !prev);
     };
 
+    // to open remind modal
     const openRemind = () => {
         setShowRemind(prev => !prev);
     };
 
+    // to close modal
     const closeModal = e => {
         if (modalRef.current === e.target) {
             setShowRemind(false);
         }
     }
 
+    // if press escape key
     const onEscapePressed = useCallback(
         e => {
             if (e.key === 'Escape' && showRemind) {
@@ -35,12 +43,15 @@ const PlayRemindModal = ({ showLogin, setShowLogin, showRemind, setShowRemind })
             }
         }, [setShowRemind, showRemind]);
 
+    // do after render
     useEffect(() => {
+        // detect esc key presses
         document.addEventListener('keydown', onEscapePressed);
         return () => document.removeEventListener('keydown', onEscapePressed)
     }, [onEscapePressed]);
 
     return (
+        // html code
         <div>
             {showRemind ?
                 <div className="modal" ref={modalRef} onClick={closeModal}>
@@ -68,4 +79,5 @@ const PlayRemindModal = ({ showLogin, setShowLogin, showRemind, setShowRemind })
     );
 }
 
+// export PlayRemindModal
 export default PlayRemindModal;

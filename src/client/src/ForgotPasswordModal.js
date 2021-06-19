@@ -4,7 +4,7 @@ import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { useSpring, animated } from 'react-spring';
 import { useAuth } from './firebase/AuthContext';
 
-// the modal for Forgot Password
+// the Forgot Password modal
 // ForgotPasswordModal component declared functionally
 const ForgotPasswordModal = ({ showLogin, setShowLogin, showResetPass, setShowResetPass }) => {
 

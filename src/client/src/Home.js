@@ -25,6 +25,7 @@ const Home = () => {
     }
 
     return (
+        // html code
         <div className="big-wrapper">
             <div className="container">
                 <div className="content-wrapper">
@@ -58,4 +59,5 @@ const Home = () => {
     );
 }
 
+// export Home
 export default Home;

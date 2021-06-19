@@ -1,10 +1,14 @@
+// imports
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { useAuth } from './firebase/AuthContext';
 import { Link } from 'react-router-dom';
 import { useSpring, animated } from 'react-spring';
 
+// the Sign Up modal
+// SignUpModal component declared functionally
 const SignUpModal = ({ showSignUp, setShowSignUp, showLogin, setShowLogin }) => {
 
+    // set constants
     const emailRef = useRef()
     const passwordRef = useRef()
     const confirmPasswordRef = useRef()
@@ -15,18 +19,20 @@ const SignUpModal = ({ showSignUp, setShowSignUp, showLogin, setShowLogin }) => 
     const emailRegEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 
-
+    // handle sign up form submission
     async function handleSubmit(e) {
         e.preventDefault()
 
+        // check if password is in correct format
         if (!emailRef.current.value.match(emailRegEx)) {
             return setError('Invalid email format')
         }
-
+        // check if password is atleast 6 length
         if (passwordRef.current.value.length < 6) {
             return setError('Password should be at least 6 characters')
         }
 
+        // check if confirmPassword field is the same as password field
         if (passwordRef.current.value !==
             confirmPasswordRef.current.value) {
             return setError('Passwords do not match')
@@ -35,6 +41,7 @@ const SignUpModal = ({ showSignUp, setShowSignUp, showLogin, setShowLogin }) => 
         try {
             setError('')
             setLoading(true)
+            // call signup function from firebase
             await signup(emailRef.current.value, passwordRef.current.value,
                 usernameRef.current.value)
             alert('Signed up successfully')
@@ -48,15 +55,19 @@ const SignUpModal = ({ showSignUp, setShowSignUp, showLogin, setShowLogin }) => 
 
     }
 
+    // to open sign up modal
     const openSignUp = () => {
         setShowSignUp(prev => !prev);
     };
 
+    // to open log in modal
     const openLogin = () => {
         setShowLogin(prev => !prev);
     };
 
     const modalRef = useRef()
+
+    // set animation for modal
     const animation = useSpring({
         config: {
             duration: 400
@@ -65,12 +76,14 @@ const SignUpModal = ({ showSignUp, setShowSignUp, showLogin, setShowLogin }) => 
         transform: showSignUp ? 'translateY(30%)' : 'translateY(-100%)'
     })
 
+    // to close modal
     const closeModal = e => {
         if (modalRef.current === e.target) {
             setShowSignUp(false);
         }
     }
 
+    // if press escape key
     const onEscapePressed = useCallback(
         e => {
             if (e.key === 'Escape' && showSignUp) {
@@ -78,12 +91,15 @@ const SignUpModal = ({ showSignUp, setShowSignUp, showLogin, setShowLogin }) => 
             }
         }, [setShowSignUp, showSignUp]);
 
+    // do after render
     useEffect(() => {
+        // detect escape key press
         document.addEventListener('keydown', onEscapePressed);
         return () => document.removeEventListener('keydown', onEscapePressed)
     }, [onEscapePressed]);
 
     return (
+        // html code
         <div>
             {showSignUp ?
                 <div className="modal" ref={modalRef} onClick={closeModal}>
@@ -116,4 +132,5 @@ const SignUpModal = ({ showSignUp, setShowSignUp, showLogin, setShowLogin }) => 
     );
 }
 
+// export SignUpModal
 export default SignUpModal;
