@@ -5,7 +5,6 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 // make constants for each page
 const { default: Header } = require("./Header");
 const { default: Home } = require("./Home");
-const { default: Learn } = require("./Learn");
 const { default: Play } = require("./Play")
 const { default: About } = require("./About");
 const { default: History } = require("./History");
