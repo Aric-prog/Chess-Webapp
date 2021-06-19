@@ -1,7 +1,9 @@
+// the footer
 const Footer = () => {
 
 
     return ( 
+        // html code
         <div className="footer-container">
             <div className="footer-content-container">
                 <div>Bryan Putra</div>
@@ -23,5 +25,6 @@ const Footer = () => {
         </div>
     );
 }
- 
+
+// export Footer
 export default Footer;

@@ -1,6 +1,8 @@
+// imports
 import { AuthProvider } from "./firebase/AuthContext";
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
+// make constants for each page
 const { default: Header } = require("./Header");
 const { default: Home } = require("./Home");
 const { default: Learn } = require("./Learn");
@@ -13,9 +15,12 @@ const { default: PlayOption} = require("./PlayOption")
 const { default: PlayAIOne} = require("./PlayAIOne")
 const { default: PlayAITwo} = require("./PlayAITwo")
 
+// main app
 function App() {
 
   return (
+    // set auth from firebase
+    // set all routes
     <AuthProvider>
       <Router>
         <div className="App">

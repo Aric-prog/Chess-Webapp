@@ -1,3 +1,4 @@
+//imports from react, images used
 import { useState } from "react";
 import Members from './Members';
 import bryan from './images/bepe.jpg'
@@ -9,8 +10,10 @@ import nodeJsLogo from './images/nodejs-yellow.svg'
 import fireBaseLogo from './images/firebase.svg'
 import websiteIllus from './images/website2.svg'
 
+// the About Us page
 const About = () => {
 
+    // make constants for group member info
     const [members, setMembers] = useState([
         {
             name: 'Aric Hernando',
@@ -30,7 +33,9 @@ const About = () => {
         }
     ]);
 
+
     return (
+        // html code
         <div className="big-wrapper">
             <div className="container">
                 <div className="thanks-wrapper">
@@ -67,4 +72,5 @@ const About = () => {
     );
 }
 
+// export About
 export default About;
