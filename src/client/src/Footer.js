@@ -1,4 +1,5 @@
 // the footer
+// Footer component declared functionally
 const Footer = () => {
 
 

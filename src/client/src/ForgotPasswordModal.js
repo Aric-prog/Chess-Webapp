@@ -1,21 +1,26 @@
+// imports
 import '../node_modules/font-awesome/css/font-awesome.min.css';
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { useSpring, animated } from 'react-spring';
 import { useAuth } from './firebase/AuthContext';
 
+// the modal for Forgot Password
+// ForgotPasswordModal component declared functionally
 const ForgotPasswordModal = ({ showLogin, setShowLogin, showResetPass, setShowResetPass }) => {
 
+    // set constants
     const emailRef = useRef()
     const { resetPassword } = useAuth()
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
 
-
+    // handle submission form
     async function handleSubmit(e) {
         e.preventDefault()
         try {
             setError('')
             setLoading(true)
+            // call reset password function
             await resetPassword(emailRef.current.value)
             alert('Check your email for further instructions')
             setError('')
@@ -27,6 +32,8 @@ const ForgotPasswordModal = ({ showLogin, setShowLogin, showResetPass, setShowRe
     }
 
     const modalRef = useRef()
+
+    // animation for modal
     const animation = useSpring({
         config: {
             duration: 250
@@ -35,16 +42,19 @@ const ForgotPasswordModal = ({ showLogin, setShowLogin, showResetPass, setShowRe
         transform: showResetPass ? 'translateY(55%)' : 'translateY(-100%)'
     })
 
+    // to open reset password modal
     const openResetPass = () => {
         setShowResetPass(prev => !prev);
     };
-
+    
+    // to close modal
     const closeModal = e => {
         if(modalRef.current === e.target){
             setShowResetPass(false);
         }
     }
 
+    // if press escape key
     const onEscapePressed = useCallback(
         e => {
         if(e.key === 'Escape' && showResetPass){
@@ -52,12 +62,15 @@ const ForgotPasswordModal = ({ showLogin, setShowLogin, showResetPass, setShowRe
         }
     }, [setShowResetPass, showResetPass]);
 
+    // do after render
     useEffect(() => {
+        // detect esc key press
         document.addEventListener('keydown', onEscapePressed);
         return () => document.removeEventListener('keydown', onEscapePressed)
     }, [onEscapePressed]);
 
     return (  
+        // html code
         <div>
             {showResetPass ?
                 <div className="modal" ref={modalRef} onClick={closeModal}>
@@ -80,5 +93,6 @@ const ForgotPasswordModal = ({ showLogin, setShowLogin, showResetPass, setShowRe
         </div>
     );
 }
- 
+
+// export ForgotPasswordModal
 export default ForgotPasswordModal;

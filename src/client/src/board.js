@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Chessboard from "chessboardjsx";
 
 // the chess board
+// Board component declared functionally
 const Board = (props) => {
 	
 	// set constants

@@ -11,6 +11,7 @@ import fireBaseLogo from './images/firebase.svg'
 import websiteIllus from './images/website2.svg'
 
 // the About Us page
+// About component declared functionally
 const About = () => {
 
     // make constants for group member info

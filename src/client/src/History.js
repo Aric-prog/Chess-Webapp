@@ -1,8 +1,13 @@
+// imports
 import { useEffect, useState } from "react";
 import { useAuth } from './firebase/AuthContext';
 import { db } from './firebase/firebase-config';
 import { Link } from 'react-router-dom'
+
+// the History page
+// History component declared functionally
 const History = () => {
+    // set constants
     const { currentUser } = useAuth()
     const [historyData, setHistoryData] = useState([])
     const [username, setUsername] = useState('')
@@ -10,7 +15,7 @@ const History = () => {
     const historyDataLength = historyDataIsEmpty ? 0 : historyData.length
     var wincount = 0;
 
-    // Gets the history data for someone
+    // after render, gets the history data for someone
     useEffect(() => {
         if (currentUser !== null) {
             const token = currentUser.getIdToken().then(token =>
@@ -35,7 +40,9 @@ const History = () => {
         }
     }, [])
 
+    // do after render 
     useEffect(() => {
+        // set username
         if (currentUser !== null) {
             db.collection('users').doc(currentUser.uid).get().then(doc => {
                 return setUsername(doc.data().username)
@@ -43,6 +50,7 @@ const History = () => {
         }
     }, [])
 
+    // count the wins of user
     function countWins(){
         historyData.map(data => {
             if (data.result === "W") {
@@ -55,10 +63,12 @@ const History = () => {
     return wincount
     }
 
+    // calculate result and winrate
     const result = historyDataIsEmpty ? 0 : countWins()
     const winRate = historyDataIsEmpty ? 0 : (result / historyDataLength) * 100
 
     return (
+        // html code
         <div className="big-wrapper">
             <div className="container">
                 <div className="history-wrapper">
@@ -102,4 +112,5 @@ const History = () => {
     );
 }
 
+// export History
 export default History;

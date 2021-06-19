@@ -1,3 +1,4 @@
+// imports
 import chessintro from './images/chessintro.png';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
@@ -7,14 +8,18 @@ import LoginModal from './LoginModal';
 import { useAuth } from './firebase/AuthContext';
 import ForgotPasswordModal from './ForgotPasswordModal';
 
+// the home page
+// Home component declared functionally
 const Home = () => {
 
+    //set constants
     const [showLogin, setShowLogin] = useState(false);
     const [showRemind, setShowRemind] = useState(false);
     const [showSignUp, setShowSignUp] = useState(false);
     const [showResetPass, setShowResetPass] = useState(false);
     const { currentUser } = useAuth()
 
+    // to open remind modal
     const openRemind = () => {
         setShowRemind(prev => !prev);
     }

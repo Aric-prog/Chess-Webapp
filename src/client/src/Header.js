@@ -1,3 +1,4 @@
+// imports
 import React, { useState, useEffect } from 'react';
 import LoginModal from './LoginModal';
 import { Link, useHistory } from 'react-router-dom';
@@ -7,8 +8,11 @@ import { db } from './firebase/firebase-config';
 import ForgotPasswordModal from './ForgotPasswordModal';
 import PlayRemindModal from './PlayRemindModal';
 
+// the header
+// Header component declared functionally
 const Header = () => {
 
+    // set constants
     const [showLogin, setShowLogin] = useState(false);
     const [showSignUp, setShowSignUp] = useState(false);
     const [showResetPass, setShowResetPass] = useState(false);
@@ -19,11 +23,13 @@ const Header = () => {
     const [username, setUsername] = useState('')
     const history = useHistory()
 
+    // handle sign out from firebase auth
     async function handleSignOut(e) {
         e.preventDefault()
         try {
             setError('')
             setLoading(true)
+            // call signout function
             await signout()
             history.push('/')
         } catch {
@@ -32,18 +38,24 @@ const Header = () => {
         setLoading(false)
     }
 
+    // to open login modal
     const openLogin = () => {
         setShowLogin(prev => !prev);
     };
 
+    // to open sign up modal
     const openSignUp = () => {
         setShowSignUp(prev => !prev);
     };
+
+    // to open remind modal
     const openRemind = () => {
         setShowRemind(prev => !prev);
     }
 
+    // do after render 
     useEffect(() => {
+        // set username on header
         if(currentUser !== null){
             db.collection('users').doc(currentUser.uid).get().then(doc => {
                 return setUsername(doc.data().username)
@@ -55,6 +67,7 @@ const Header = () => {
     // const checkPlay = currentUser !== null ?
 
     return (
+        // html code
         <nav className="navbar">
             <div className="container">
                 <div className="header-left">
@@ -85,4 +98,5 @@ const Header = () => {
     );
 }
 
+// export Header
 export default Header;
