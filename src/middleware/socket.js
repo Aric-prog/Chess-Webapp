@@ -4,26 +4,26 @@ const { Room } = require("../room")
 const admin = require("./admin");
 const chess = new Chess()
 
-// Room Info, with key being id and room being the infos
+// room Info, with key being id and room being the infos
 var roomInfo = {}
 
-// Contains someone's uid and their room
+// contains someone's uid and their room
 var playerRoom = {}
 
 function init_io(io) {
-    // Checks if user is authenticated here
+    // check if user is authenticated here
     io.use(auth)
     io.on('connect', socket => {
         const uidFromMiddleware = socket.uid;
         socket.on('join room', (roomCode, callback) => {
             if(!(roomCode in roomInfo)){
-                // Room not in room list, creating room
+                // if room not in room list, creating room
                 roomInfo[roomCode] = new Room(roomCode, roomFilled);
             }
             playerRoom[uidFromMiddleware] = roomCode;
             socket.join(roomCode);
             
-            // Callback moment here with pgn
+            // calls the callback function provided by client side event
             callback({
                 side : roomInfo[roomCode].assignPlayer(uidFromMiddleware),
                 fen : roomInfo[roomCode].currentFen,
@@ -31,8 +31,8 @@ function init_io(io) {
             })
         })
         socket.on('move', (move, fen, callback) => {
-            // If move is valid to current roomCode
-            // Get uid and the room
+            // if move is valid to current roomCode
+            // get uid and the room
             const currentRoom = roomInfo[playerRoom[uidFromMiddleware]]
             if(currentRoom.currentFen === fen){
                 newFen = validateMove(move, fen)
@@ -43,9 +43,12 @@ function init_io(io) {
                     callback({status:"move accepted", move: move})
                 }
             }
-            // Move denied, refresh browser
+            // move denied, refresh browser
             callback({status:"move denied"})
         })
+
+        // receives and verifies game over event from client
+        // deletes room and writes to firebase on valid event
         socket.on('game over', (fen, pgn, side) => {
             const currentRoom = roomInfo[playerRoom[uidFromMiddleware]];
             const roomKey = playerRoom[uidFromMiddleware];
@@ -100,11 +103,10 @@ function init_io(io) {
 
 module.exports = init_io
 
-
-
+// validate move given from player
 const validateMove = function(move, fen){
     if(chess.load(fen)){
-        // Position failed to load, tell client to refresh their browser
+        // position failed to load, tell client to refresh their browser
         moveObj = chess.move(move)
     } else{
         return false
@@ -113,11 +115,12 @@ const validateMove = function(move, fen){
     if(moveObj !== null){
         return chess.fen()
     } else{
-        // Move illegal
+        // move illegal
         return false
     }
 }
 
+// gets the winner of a game, given a side
 const getWinner = (fen, side) => {
     chess.load(fen)
     if(chess.game_over()){

@@ -1,5 +1,6 @@
 const admin = require("./admin");
 
+// authentication middleware to check if JWT is legitimate or not
 function authenticated(req, res, next){
     const headerToken = req.headers.authorization;
     if(!headerToken){
@@ -11,6 +12,8 @@ function authenticated(req, res, next){
     }
 
     const token = headerToken.split(" ")[1];
+    
+    // use previously initialized admin account to verify token
     admin
         .auth()
         .verifyIdToken(token)

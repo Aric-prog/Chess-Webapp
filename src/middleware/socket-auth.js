@@ -1,5 +1,7 @@
 const admin = require("./admin");
 
+// same function as auth.js except modified to fit with socket.io
+// used when players do operations that require authentication (e.g. making a room)
 function auth(socket, next) {
     headerToken = socket.handshake.headers.authorization;
     if(!headerToken){
