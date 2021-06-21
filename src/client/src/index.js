@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-
+// this is telling that the app component has to be loaded into an html element with id root which is in the index.html
 ReactDOM.render(
   <React.StrictMode>
     <App />

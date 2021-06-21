@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 
+
+// tried making a custom react hook for fetching data but didnt actually use it later on
 const useFetch = (url) => {
 
     const [data, setData] = useState(null);
